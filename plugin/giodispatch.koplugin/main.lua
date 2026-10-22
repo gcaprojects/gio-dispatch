@@ -6,6 +6,7 @@ and opens it in the reader. With no connection it opens the newest copy.
 ]]
 
 local DataStorage = require("datastorage")
+local Dispatcher = require("dispatcher")
 local InfoMessage = require("ui/widget/infomessage")
 local InputDialog = require("ui/widget/inputdialog")
 local LuaSettings = require("luasettings")
@@ -31,7 +32,23 @@ local GioDispatch = WidgetContainer:extend{
 function GioDispatch:init()
     lfs.mkdir(DIR)
     self.settings = LuaSettings:open(DataStorage:getSettingsDir() .. "/giodispatch.lua")
+    self:onDispatcherRegisterActions()
     self.ui.menu:registerToMainMenu(self)
+end
+
+-- Lets gestures and the Bookshelf start menu open today's edition.
+function GioDispatch:onDispatcherRegisterActions()
+    Dispatcher:registerAction("giodispatch_today", {
+        category = "none",
+        event = "GioDispatchToday",
+        title = _("Gio's Daily Dispatch: today's edition"),
+        general = true,
+    })
+end
+
+function GioDispatch:onGioDispatchToday()
+    self:fetchAndOpen()
+    return true
 end
 
 function GioDispatch:base()

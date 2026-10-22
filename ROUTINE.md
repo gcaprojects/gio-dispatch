@@ -26,6 +26,7 @@ Follow `template/reference-edition.html` exactly:
 - Each drill: 3 multiple-choice questions (at least one *apply* and one *analyse/evaluate*), never asking about news facts. Then a `<details class="reveal">` toggle with that section's answers, each giving the working and why each wrong option is tempting.
 - Back Page: one new question on the most overdue concept from history (spaced repetition: 3, 7, 16, 35 days).
 - Set `<meta name="edition-date" content="DATE">`. The KOReader plugin depends on it.
+- **The reader's device is a Kindle Paperwhite 3** (6", 1072×1448, 300 ppi, greyscale) in KOReader. The stylesheet is already tuned for it, so don't change it. In the content: figures tables have at most 3 columns with short cells; each displayed formula fits on about 40 characters per line (split long ones across two `formula` lines); no images, colour, dotted lines or inline styles that shrink text.
 
 ## 5. Review before publishing (mandatory)
 Act as a separate reviewer and check:

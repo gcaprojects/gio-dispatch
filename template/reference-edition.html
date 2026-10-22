@@ -7,58 +7,58 @@
 <title>Gio's Daily Dispatch</title>
 <style type="text/css">
 /* crengine-safe: block flow, floats, tables, borders, em units. No flex/grid/JS/remote fonts. */
-html { background-color: #f7f4ec; }
+html { background-color: #fff; }
 body {
-  font-family: "Libre Caslon Text", "EB Garamond", "Noto Serif", Georgia, "Times New Roman", serif;
+  font-family: "Source Serif 4", "Noto Serif", Georgia, "Times New Roman", serif;
   color: #000;
-  background-color: #f7f4ec;
+  background-color: #fff;
   max-width: 38em;
   margin: 0 auto;
-  padding: 1em 1em 3em 1em;
+  padding: 0 0.5em 2em 0.5em;
   line-height: 1.4;
 }
 p { margin: 0; text-indent: 1.2em; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
 p.first, p.noindent { text-indent: 0; }
-a { color: #000; text-decoration: none; border-bottom: 1px dotted #000; }
+a { color: #000; text-decoration: underline; }
 .page { page-break-before: always; }
 
 /* Nameplate */
-.folio-top { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.12em; text-align: center; margin: 0 0 0.4em 0; }
+.folio-top { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.12em; text-align: center; margin: 0 0 0.4em 0; }
 .nameplate {
   font-size: 2.4em; font-weight: normal; text-transform: uppercase; letter-spacing: 0.04em;
   text-align: center; line-height: 1.1; margin: 0; padding: 0.25em 0 0.2em 0;
-  border-top: 3px double #000; border-bottom: 1px solid #000;
+  border-top: 5px double #000; border-bottom: 2px solid #000;
 }
 .folio {
-  font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.1em; text-align: center;
-  padding: 0.35em 0; border-bottom: 3px double #000; margin: 0 0 0.6em 0;
+  font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.1em; text-align: center;
+  padding: 0.35em 0; border-bottom: 5px double #000; margin: 0 0 0.6em 0;
 }
 .motto { font-style: italic; text-align: center; text-indent: 0; margin: 0 0 1.2em 0; font-size: 0.95em; }
 
 /* Section labels */
 .label {
   font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.15em; text-align: center; font-weight: normal;
-  border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 0.2em 0; margin: 1.4em 0 0.7em 0;
+  border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 0.2em 0; margin: 1.4em 0 0.7em 0;
 }
 
 /* Index */
 table.index { width: 100%; border-collapse: collapse; margin: 0 0 1.2em 0; }
-table.index td { vertical-align: top; padding: 0.5em 0.3em; border-bottom: 1px solid #000; }
+table.index td { vertical-align: top; padding: 0.5em 0.3em; border-bottom: 2px solid #000; }
 table.index td.num { width: 1.6em; font-size: 1.4em; line-height: 1; text-align: center; }
 table.index td.pg { width: 3.5em; text-align: right; font-size: 0.85em; }
-.kicker { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.12em; }
+.kicker { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.12em; }
 .idx-head { font-weight: bold; }
 .idx-deck { font-style: italic; font-size: 0.9em; }
 
 /* Story */
 h2.headline { font-size: 1.6em; font-weight: bold; line-height: 1.15; margin: 0.15em 0 0.3em 0; text-align: left; }
 .deck { font-size: 1.1em; font-style: italic; line-height: 1.3; margin: 0 0 0.6em 0; text-indent: 0; text-align: left; }
-.byline { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.1em; text-indent: 0;
-  border-top: 1px solid #000; padding: 0.3em 0 0 0; margin: 0 0 0.8em 0; }
+.byline { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.1em; text-indent: 0;
+  border-top: 2px solid #000; padding: 0.3em 0 0 0; margin: 0 0 0.8em 0; }
 .dateline { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.08em; }
 .dropcap { float: left; font-size: 3.2em; line-height: 0.85; padding: 0.05em 0.08em 0 0; margin: 0; }
 h3.sub { font-size: 0.95em; font-weight: bold; font-style: italic; margin: 1em 0 0.3em 0; text-align: left; }
-.note { font-size: 0.8em; font-style: italic; text-indent: 0; margin: 0.5em 0; }
+.note { font-size: 0.85em; font-style: italic; text-indent: 0; margin: 0.5em 0; }
 
 /* Formulas */
 .formula { text-align: center; text-indent: 0; margin: 0.7em 0; font-size: 1em; }
@@ -67,17 +67,17 @@ h3.sub { font-size: 0.95em; font-weight: bold; font-style: italic; margin: 1em 0
 
 /* Figures box */
 table.figs { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 0.85em;
-  border-top: 1px solid #000; border-bottom: 1px solid #000; }
+  border-top: 2px solid #000; border-bottom: 2px solid #000; }
 table.figs caption { font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.1em; text-align: left; padding: 0 0 0.3em 0; }
-table.figs th { text-align: left; font-weight: normal; font-style: italic; border-bottom: 1px solid #000; padding: 0.25em 0.3em; }
-table.figs td { padding: 0.2em 0.3em; border-bottom: 1px dotted #000; vertical-align: top; }
-table.figs td.n, table.figs th.n { text-align: right; white-space: nowrap; }
+table.figs th { text-align: left; font-weight: normal; font-style: italic; border-bottom: 2px solid #000; padding: 0.25em 0.3em; }
+table.figs td { padding: 0.2em 0.3em; border-bottom: 1px solid #000; vertical-align: top; }
+table.figs td.n, table.figs th.n { text-align: right; }
 
 /* Lists */
 ul.checks { margin: 0.4em 0 0.4em 0; padding: 0 0 0 1.2em; }
 ul.checks li { margin: 0 0 0.3em 0; text-align: justify; }
 
-.interview { text-indent: 0; font-style: italic; border-left: 1px solid #000; padding: 0 0 0 0.8em; margin: 0.6em 0; }
+.interview { text-indent: 0; font-style: italic; border-left: 2px solid #000; padding: 0 0 0 0.8em; margin: 0.6em 0; }
 .end { text-align: center; text-indent: 0; margin: 1.2em 0 0 0; font-size: 0.9em; letter-spacing: 0.3em; }
 
 /* Drill */
@@ -89,18 +89,18 @@ ol.opts li { margin: 0 0 0.2em 0; }
 .alink { text-indent: 0; text-align: right; font-size: 0.85em; margin: 0.2em 0 0 0; }
 
 /* Answers */
-.ans { margin: 0.9em 0 0 0; padding: 0 0 0.7em 0; border-bottom: 1px solid #000; }
+.ans { margin: 0.9em 0 0 0; padding: 0 0 0.7em 0; border-bottom: 2px solid #000; }
 .verdict { font-weight: bold; text-indent: 0; }
 .why { font-size: 0.92em; margin: 0.3em 0 0 0; text-indent: 0; }
 .back { text-indent: 0; font-size: 0.85em; margin: 0.4em 0 0 0; }
 
-.colophon { font-size: 0.75em; text-align: center; text-indent: 0; border-top: 3px double #000; padding: 0.5em 0 0 0; margin: 2em 0 0 0; letter-spacing: 0.05em; }
-.newc { font-size: 0.7em; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid #000; padding: 0 0.3em; }
-.tags { font-size: 0.75em; letter-spacing: 0.08em; text-indent: 0; margin: 0.6em 0 0 0; }
-.src { font-size: 0.75em; font-style: italic; text-indent: 0; margin: 0.4em 0 0 0; }
+.colophon { font-size: 0.8em; text-align: center; text-indent: 0; border-top: 5px double #000; padding: 0.5em 0 0 0; margin: 2em 0 0 0; letter-spacing: 0.05em; }
+.newc { font-size: 0.75em; letter-spacing: 0.15em; text-transform: uppercase; border: 2px solid #000; padding: 0 0.3em; }
+.tags { font-size: 0.8em; letter-spacing: 0.08em; text-indent: 0; margin: 0.6em 0 0 0; }
+.src { font-size: 0.8em; font-style: italic; text-indent: 0; margin: 0.4em 0 0 0; }
 details, summary { display: block; }
 summary { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.15em; text-align: center;
-  border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 0.3em 0; margin: 1.4em 0 0 0; cursor: pointer; }
+  border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 0.3em 0; margin: 1.4em 0 0 0; cursor: pointer; }
 summary::-webkit-details-marker { display: none; }
 .answers-page { page-break-before: always; }
 </style>
@@ -226,7 +226,7 @@ summary::-webkit-details-marker { display: none; }
 </ol>
 </div>
 <details class="reveal">
-<summary>Show answers &#183; Story I</summary>
+<summary>Answers &#8212; tap here, or turn the page &#183; Story I</summary>
 <div class="answers-page">
 <div class="ans" id="a1">
 <p class="verdict">1. B &#8212; breach at about 2.35&#215;.</p>
@@ -324,7 +324,7 @@ summary::-webkit-details-marker { display: none; }
 </ol>
 </div>
 <details class="reveal">
-<summary>Show answers &#183; Story II</summary>
+<summary>Answers &#8212; tap here, or turn the page &#183; Story II</summary>
 <div class="answers-page">
 <div class="ans" id="a4">
 <p class="verdict">4. B &#8212; 18%.</p>
@@ -423,7 +423,7 @@ summary::-webkit-details-marker { display: none; }
 </ol>
 </div>
 <details class="reveal">
-<summary>Show answers &#183; Story III</summary>
+<summary>Answers &#8212; tap here, or turn the page &#183; Story III</summary>
 <div class="answers-page">
 <div class="ans" id="a7">
 <p class="verdict">7. C &#8212; about &#8722;1.6%.</p>
@@ -458,7 +458,7 @@ summary::-webkit-details-marker { display: none; }
 </ol>
 </div>
 <details class="reveal">
-<summary>Show answers &#183; Back Page</summary>
+<summary>Answers &#8212; tap here, or turn the page &#183; Back Page</summary>
 <div class="answers-page">
 <div class="ans" id="a10">
 <p class="verdict">10. B &#8212; 5.0%.</p>
