@@ -19,7 +19,7 @@ local socket = require("socket")
 local socketutil = require("socketutil")
 local _ = require("gettext")
 
-local DEFAULT_BASE = "https://GITHUB-USER.github.io/gio-dispatch/"
+local DEFAULT_BASE = "https://gcaprojects.github.io/gio-dispatch/"
 local DIR = DataStorage:getDataDir() .. "/giodispatch/"
 local KEEP_DAYS = 30
 
