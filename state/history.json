@@ -4,11 +4,57 @@
       "date": "2026-10-22",
       "issue": 1,
       "stories": [
-        {"headline": "Lending Against Revenue That AI Might Take Away", "primary_concepts": ["CR-ARR-LOAN", "CR-NONACCRUAL"]},
-        {"headline": "Six Days to the Fed, and a Curve Coiled Tight", "primary_concepts": ["CB-TRANSMISSION", "FI-TERMPREM"]},
-        {"headline": "The Daily-Liquid Wrapper on a Quarterly-Priced Asset", "primary_concepts": ["CR-CLO", "MS-ETF-ARB"]}
+        {
+          "headline": "Lending Against Revenue That AI Might Take Away",
+          "primary_concepts": [
+            "CR-ARR-LOAN",
+            "CR-NONACCRUAL"
+          ]
+        },
+        {
+          "headline": "Six Days to the Fed, and a Curve Coiled Tight",
+          "primary_concepts": [
+            "CB-TRANSMISSION",
+            "FI-TERMPREM"
+          ]
+        },
+        {
+          "headline": "The Daily-Liquid Wrapper on a Quarterly-Priced Asset",
+          "primary_concepts": [
+            "CR-CLO",
+            "MS-ETF-ARB"
+          ]
+        }
       ],
       "back_page_concept": "CR-BDC"
+    },
+    {
+      "date": "2026-10-23",
+      "issue": 2,
+      "stories": [
+        {
+          "headline": "Oil Jumps, Yet Short-Dated Treasuries Rally",
+          "primary_concepts": [
+            "FI-INFLATION",
+            "FI-CARRY-ROLL"
+          ]
+        },
+        {
+          "headline": "A 5% Cap Meets a 39% Request",
+          "primary_concepts": [
+            "AL-GATES",
+            "AL-EVERGREEN"
+          ]
+        },
+        {
+          "headline": "Treasury Repo Clearing: Netting, Margin and SOFR",
+          "primary_concepts": [
+            "MS-TREASURY-CLEARING",
+            "FI-REPO"
+          ]
+        }
+      ],
+      "back_page_concept": "CR-NONACCRUAL"
     }
   ]
 }

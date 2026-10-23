@@ -14,22 +14,22 @@ areas:
   DD: Fund due diligence
 
 concepts:
-  FI-DURATION: {name: "Duration: modified, Macaulay, effective", status: established, last_seen: 2026-10-22}
+  FI-DURATION: {name: "Duration: modified, Macaulay, effective", status: established, last_seen: 2026-10-23}
   FI-CONVEXITY: {name: Convexity, status: established}
   FI-KEYRATE: {name: Key-rate duration and curve-shape risk, status: established, last_seen: 2026-10-22}
-  FI-CARRY-ROLL: {name: Carry and roll-down, status: established}
+  FI-CARRY-ROLL: {name: Carry and roll-down, status: established, last_seen: 2026-10-23}
   FI-TERMPREM: {name: Term premium vs expected path, status: established, last_seen: 2026-10-22}
-  FI-REPO: {name: "Repo: GC vs specials, haircuts", status: established}
+  FI-REPO: {name: "Repo: GC vs specials, haircuts", status: established, last_seen: 2026-10-23}
   FI-BASIS: {name: "Cash-futures basis, CTD, implied repo", status: established}
   FI-SWAPSPREAD: {name: Swap spreads, status: established}
-  FI-INFLATION: {name: "Breakevens, linker carry, index lag", status: established}
+  FI-INFLATION: {name: "Breakevens, linker carry, index lag", status: established, last_seen: 2026-10-23}
   FI-MBS-NEGCONVEX: {name: MBS negative convexity, status: established}
   CR-SPREADS: {name: "OAS, Z-spread, spread duration", status: established, last_seen: 2026-10-22}
   CR-DEFAULT-LGD: {name: Default and loss given default, status: established, last_seen: 2026-10-22}
   CR-COVENANT: {name: "Covenants: cov-lite, EBITDA add-backs", status: established, last_seen: 2026-10-22}
   CR-LME: {name: "Liability management: uptiers, drop-downs", status: established}
   CR-PIK: {name: "PIK: structured vs bad PIK", status: established}
-  CR-NONACCRUAL: {name: Non-accruals, status: established, last_seen: 2026-10-22}
+  CR-NONACCRUAL: {name: Non-accruals, status: established, last_seen: 2026-10-23}
   CR-CLO: {name: "CLOs: waterfall, OC/IC tests, CCC buckets", status: established, last_seen: 2026-10-22}
   CR-BDC: {name: "BDCs: NAV discount, RIC distribution, asset coverage", status: established, last_seen: 2026-10-22}
   CR-NAVFAC: {name: NAV facilities and GP-level leverage, status: established}
@@ -51,20 +51,20 @@ concepts:
   AL-PE-SECONDARIES: {name: "PE secondaries, continuation vehicles", status: established}
   AL-JCURVE-IRR: {name: "J-curve: IRR vs TVPI/DPI", status: established}
   AL-SUBLINE: {name: Subscription lines, status: established}
-  AL-EVERGREEN: {name: Evergreen and semi-liquid funds, status: established}
-  AL-GATES: {name: "Gates, suspensions, side pockets", status: established}
+  AL-EVERGREEN: {name: Evergreen and semi-liquid funds, status: established, last_seen: 2026-10-23}
+  AL-GATES: {name: "Gates, suspensions, side pockets", status: established, last_seen: 2026-10-23}
   AL-HF-PODS: {name: Multi-manager pod funds, status: established}
   AL-REIT-NAV: {name: "Listed vs private real estate marks, cap rates", status: established}
   AL-INFRA: {name: Infrastructure, status: established}
   MS-DEALER-BS: {name: Dealer balance-sheet constraints, status: established}
   MS-ETF-ARB: {name: "ETF creation/redemption, bond ETF discounts", status: established, last_seen: 2026-10-22}
   MS-FIRE-SALE: {name: Fire sales and liquidity spirals, status: established}
-  MS-TREASURY-CLEARING: {name: Treasury central clearing mandate, status: established}
+  MS-TREASURY-CLEARING: {name: Treasury central clearing mandate, status: established, last_seen: 2026-10-23}
   MS-MMF: {name: "Money market funds: prime vs govt, liquidity fees", status: established}
   CB-RESERVES: {name: "Reserve scarcity, ON RRP drain", status: established}
   CB-QT: {name: Quantitative tightening, status: established}
   CB-SRF: {name: "Standing repo facility, SOFR spikes", status: established}
-  CB-SLR: {name: "Supplementary leverage ratio, Treasury exemption", status: established}
+  CB-SLR: {name: "Supplementary leverage ratio, Treasury exemption", status: established, last_seen: 2026-10-23}
   CB-FX-INTERVENTION: {name: FX intervention, status: established}
   CB-TRANSMISSION: {name: Monetary policy transmission, status: established, last_seen: 2026-10-22}
   RP-VAR-ES: {name: VaR and expected shortfall, status: established}
@@ -72,7 +72,7 @@ concepts:
   RP-SHARPE-SMOOTHING: {name: "Sharpe smoothing, unsmoothing", status: established}
   RP-TRACKING-ERROR: {name: Tracking error, status: established}
   RP-DRAWDOWN-LIQ: {name: Liquidity-adjusted drawdown risk, status: established}
-  DD-LIQ-MISMATCH: {name: Asset vs redemption liquidity mismatch, status: established, last_seen: 2026-10-22}
+  DD-LIQ-MISMATCH: {name: Asset vs redemption liquidity mismatch, status: established, last_seen: 2026-10-23}
   DD-VALUATION-GOV: {name: Valuation governance, status: established, last_seen: 2026-10-22}
   DD-FEES: {name: "Hurdles, catch-up, crystallisation, HWMs", status: established}
   DD-LEVERAGE: {name: "Fund, portfolio-company and GP leverage", status: established}

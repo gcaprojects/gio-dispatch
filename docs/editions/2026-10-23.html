@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="edition-date" content="2026-10-23">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gio's Daily Dispatch</title>
+<style type="text/css">
+/* crengine-safe: block flow, floats, tables, borders, em units. No flex/grid/JS/remote fonts. */
+html { background-color: #fff; }
+body {
+  font-family: "Source Serif 4", "Noto Serif", Georgia, "Times New Roman", serif;
+  color: #000;
+  background-color: #fff;
+  max-width: 38em;
+  margin: 0 auto;
+  padding: 0 0.5em 2em 0.5em;
+  line-height: 1.4;
+}
+p { margin: 0; text-indent: 1.2em; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+p.first, p.noindent { text-indent: 0; }
+a { color: #000; text-decoration: underline; }
+.page { page-break-before: always; }
+
+/* Nameplate */
+.folio-top { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.12em; text-align: center; margin: 0 0 0.4em 0; }
+.nameplate {
+  font-size: 2.4em; font-weight: normal; text-transform: uppercase; letter-spacing: 0.04em;
+  text-align: center; line-height: 1.1; margin: 0; padding: 0.25em 0 0.2em 0;
+  border-top: 5px double #000; border-bottom: 2px solid #000;
+}
+.folio {
+  font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.1em; text-align: center;
+  padding: 0.35em 0; border-bottom: 5px double #000; margin: 0 0 0.6em 0;
+}
+.motto { font-style: italic; text-align: center; text-indent: 0; margin: 0 0 1.2em 0; font-size: 0.95em; }
+
+/* Section labels */
+.label {
+  font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.15em; text-align: center; font-weight: normal;
+  border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 0.2em 0; margin: 1.4em 0 0.7em 0;
+}
+
+/* Index */
+table.index { width: 100%; border-collapse: collapse; margin: 0 0 1.2em 0; }
+table.index td { vertical-align: top; padding: 0.5em 0.3em; border-bottom: 2px solid #000; }
+table.index td.num { width: 1.6em; font-size: 1.4em; line-height: 1; text-align: center; }
+table.index td.pg { width: 3.5em; text-align: right; font-size: 0.85em; }
+.kicker { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.12em; }
+.idx-head { font-weight: bold; }
+.idx-deck { font-style: italic; font-size: 0.9em; }
+
+/* Story */
+h2.headline { font-size: 1.6em; font-weight: bold; line-height: 1.15; margin: 0.15em 0 0.3em 0; text-align: left; }
+.deck { font-size: 1.1em; font-style: italic; line-height: 1.3; margin: 0 0 0.6em 0; text-indent: 0; text-align: left; }
+.byline { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.1em; text-indent: 0;
+  border-top: 2px solid #000; padding: 0.3em 0 0 0; margin: 0 0 0.8em 0; }
+.dateline { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.08em; }
+.dropcap { float: left; font-size: 3.2em; line-height: 0.85; padding: 0.05em 0.08em 0 0; margin: 0; }
+h3.sub { font-size: 0.95em; font-weight: bold; font-style: italic; margin: 1em 0 0.3em 0; text-align: left; }
+.note { font-size: 0.85em; font-style: italic; text-indent: 0; margin: 0.5em 0; }
+
+/* Formulas */
+.formula { text-align: center; text-indent: 0; margin: 0.7em 0; font-size: 1em; }
+.formula i { font-style: italic; }
+.working { text-align: center; text-indent: 0; margin: 0 0 0.7em 0; font-size: 0.9em; }
+
+/* Figures box */
+table.figs { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 0.85em;
+  border-top: 2px solid #000; border-bottom: 2px solid #000; }
+table.figs caption { font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.1em; text-align: left; padding: 0 0 0.3em 0; }
+table.figs th { text-align: left; font-weight: normal; font-style: italic; border-bottom: 2px solid #000; padding: 0.25em 0.3em; }
+table.figs td { padding: 0.2em 0.3em; border-bottom: 1px solid #000; vertical-align: top; }
+table.figs td.n, table.figs th.n { text-align: right; }
+
+/* Lists */
+ul.checks { margin: 0.4em 0 0.4em 0; padding: 0 0 0 1.2em; }
+ul.checks li { margin: 0 0 0.3em 0; text-align: justify; }
+
+.interview { text-indent: 0; font-style: italic; border-left: 2px solid #000; padding: 0 0 0 0.8em; margin: 0.6em 0; }
+.end { text-align: center; text-indent: 0; margin: 1.2em 0 0 0; font-size: 0.9em; letter-spacing: 0.3em; }
+
+/* Drill */
+.q { margin: 1em 0 0 0; }
+.qtext { text-indent: 0; }
+.qnum { font-weight: bold; }
+ol.opts { list-style-type: upper-alpha; margin: 0.3em 0 0.3em 0; padding: 0 0 0 2em; }
+ol.opts li { margin: 0 0 0.2em 0; }
+.alink { text-indent: 0; text-align: right; font-size: 0.85em; margin: 0.2em 0 0 0; }
+
+/* Answers */
+.ans { margin: 0.9em 0 0 0; padding: 0 0 0.7em 0; border-bottom: 2px solid #000; }
+.verdict { font-weight: bold; text-indent: 0; }
+.why { font-size: 0.92em; margin: 0.3em 0 0 0; text-indent: 0; }
+.back { text-indent: 0; font-size: 0.85em; margin: 0.4em 0 0 0; }
+
+.colophon { font-size: 0.8em; text-align: center; text-indent: 0; border-top: 5px double #000; padding: 0.5em 0 0 0; margin: 2em 0 0 0; letter-spacing: 0.05em; }
+.newc { font-size: 0.75em; letter-spacing: 0.15em; text-transform: uppercase; border: 2px solid #000; padding: 0 0.3em; }
+.tags { font-size: 0.8em; letter-spacing: 0.08em; text-indent: 0; margin: 0.6em 0 0 0; }
+.src { font-size: 0.8em; font-style: italic; text-indent: 0; margin: 0.4em 0 0 0; }
+details, summary { display: block; }
+summary { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.15em; text-align: center;
+  border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 0.3em 0; margin: 1.4em 0 0 0; cursor: pointer; }
+summary::-webkit-details-marker { display: none; }
+.answers-page { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- ================= FRONT PAGE ================= -->
+<div id="front">
+<p class="folio-top">Est. 2026 · For the Fund Analyst</p>
+<h1 class="nameplate">Gio’s Daily Dispatch</h1>
+<p class="folio">Vol. I · No. 2 · Friday, 23 October 2026 · Offline Edition</p>
+<p class="motto">The news, and the pipes underneath it.</p>
+
+<p class="label">In This Edition</p>
+<table class="index">
+  <tr>
+    <td class="num">I</td>
+    <td><span class="kicker">Rates · Inflation-Linked</span><br>
+      <span class="idx-head"><a href="#s1">Oil Jumps, Yet Short-Dated Treasuries Rally</a></span><br>
+      <span class="idx-deck">Nominal yield equals real yield plus breakeven. Which leg moved?</span></td>
+  </tr>
+  <tr>
+    <td class="num">II</td>
+    <td><span class="kicker">Private Credit · Fund Structures</span><br>
+      <span class="idx-head"><a href="#s2">A 5% Cap Meets a 39% Request</a></span><br>
+      <span class="idx-deck">What a pro-rata tender offer does to the investor who wants out.</span></td>
+  </tr>
+  <tr>
+    <td class="num">III</td>
+    <td><span class="kicker">Market Structure · Repo</span><br>
+      <span class="idx-head"><a href="#s3">Treasury Repo Clearing: Netting, Margin and SOFR</a></span><br>
+      <span class="idx-deck">Why a benchmark can stay put while dealer capacity changes.</span></td>
+  </tr>
+  <tr>
+    <td class="num">§</td>
+    <td><span class="kicker">Back Page · Review</span><br>
+      <span class="idx-head"><a href="#back">Non-Accruals, and the Loans Next in Line</a></span></td>
+  </tr>
+</table>
+<p class="note">News facts are summarised from the sources cited under each story. Numbers in figures boxes, worked examples and questions are illustrative unless attributed.</p>
+
+<p class="label">Interview Line of the Day</p>
+<p class="interview">“When oil spikes and yields fall, I decompose the move. If real yields fell more than breakevens rose, the market is pricing growth damage, not inflation.”</p>
+</div>
+
+<!-- ================= STORY I ================= -->
+<div class="page" id="s1">
+<p class="kicker" style="text-indent:0">Rates · Inflation-Linked · Story I</p>
+<h2 class="headline">Oil Jumps, Yet Short-Dated Treasuries Rally</h2>
+<p class="deck">An energy supply shock is inflationary on paper. On 22 October the front end of the curve read it as a growth shock instead.</p>
+<p class="byline">From our rates desk</p>
+
+<p class="label">The News</p>
+<p class="first"><span class="dropcap">O</span><span class="dateline">22 Oct.</span> — Oil rose above $110 a barrel after a Houthi drone strike near Saudi Aramco’s Shaybah oilfield, according to The National, which said operations were unaffected. According to BigGo Finance, short-term Treasury yields fell by as much as 20 basis points intraday, and analysts it quoted said growth concerns and financial-market jitters outweighed inflation pressure from oil. Market recaps described a sell-off in equities led by technology. The Fed announces its decision on 28 October.</p>
+
+<p class="label">The Plumbing</p>
+
+<h3 class="sub">1. Splitting a nominal yield</h3>
+<p class="first">A Treasury and a TIPS of the same maturity differ only in what they pay. The gap in yield is the <i>breakeven</i> inflation rate:</p>
+<p class="formula"><i>BE</i> = <i>y</i><sub>nominal</sub> − <i>y</i><sub>real</sub></p>
+<p>Breakeven is not a pure forecast. It also contains an inflation risk premium and a liquidity premium, because TIPS are less liquid than nominals. Real yield, in turn, reflects the expected path of the policy rate net of inflation, plus a real term premium.</p>
+
+<h3 class="sub">2. Two channels from oil</h3>
+<p class="first">An oil shock hits both legs. <b>Channel one</b>: higher energy prices lift expected headline inflation, so breakevens rise. <b>Channel two</b>: if the market thinks the shock will damage growth, or that it will push risk assets down and drive investors into safe assets, the expected policy path and real yields fall. The nominal yield moves by the sum of the two, so its direction tells you which channel won:</p>
+<table class="figs">
+  <caption>Figures box · 5-year point (illustrative numbers)</caption>
+  <tr><th> </th><th class="n">Before</th><th class="n">After</th></tr>
+  <tr><td>Nominal</td><td class="n">4.00%</td><td class="n">3.80%</td></tr>
+  <tr><td>Real (TIPS)</td><td class="n">1.60%</td><td class="n">1.30%</td></tr>
+  <tr><td>Breakeven</td><td class="n">2.40%</td><td class="n">2.50%</td></tr>
+</table>
+<p class="first">Here nominals rally 20bp, yet breakevens <i>widen</i> 10bp, because real yields fell 30bp. A nominal-only view reads this as “inflation fear faded”. The decomposition says the opposite for inflation expectations.</p>
+
+<h3 class="sub">3. Expressing it, and the index lag</h3>
+<p class="first">A <i>breakeven widener</i> is long TIPS and short a nominal of matching maturity, sized so that each leg has the same DV01. It profits when the breakeven rises, whatever the level of yields does. With $40k DV01 per leg: TIPS leg +30bp × $40k = +$1.2m, nominal leg −20bp × $40k = −$0.8m, net +$0.4m = 10bp × $40k.</p>
+<p>TIPS principal accrues with an index that lags CPI by roughly three months. The carry on a linker over the next few weeks is therefore set by CPI prints that already exist. An oil spike today feeds the accrual only as later months roll into the reference index, so linker carry and breakeven repricing are different things.</p>
+
+<p class="label">Why It Matters for a Fund Analyst</p>
+<ul class="checks">
+  <li><b>Ask a rates manager to split the P&amp;L:</b> how much came from real yields and how much from breakevens?</li>
+  <li><b>Ask what an “inflation hedge” in a multi-asset fund really is.</b> A TIPS fund has large real-rate duration and can fall when real yields rise even if inflation does too.</li>
+  <li><b>Check how the fund reports duration</b>: nominal DV01, real DV01 and breakeven DV01 are separate exposures.</li>
+</ul>
+
+<p class="tags">Concepts: <b>FI-INFLATION</b> · FI-CARRY-ROLL · FI-DURATION</p>
+<p class="src">Sources: The National, “Oil tops $110 as Houthi drone strike near Saudi Shaybah field rattles markets” (22 Oct.); BigGo Finance, “U.S. Treasuries Rally as AI Investment Cracks Widen” (22 Oct.); market recaps of 22 Oct. (CNBC live blog; Closing Tape, MarketAlleys); Fed Rate Dashboard for the meeting date.</p>
+<p class="end">— ◆ —</p>
+</div>
+
+<div class="page" id="d1">
+<p class="label">The Drill · Story I</p>
+
+<div class="q" id="q1">
+<p class="qtext"><span class="qnum">1.</span> A 5-year Treasury yields 4.00% and a 5-year TIPS yields 1.60%. What is the 5-year breakeven inflation rate?</p>
+<ol class="opts">
+  <li>5.60%</li>
+  <li>2.56%</li>
+  <li>2.40%</li>
+  <li>1.60%</li>
+</ol>
+</div>
+
+<div class="q" id="q2">
+<p class="qtext"><span class="qnum">2.</span> An investor is long 5-year TIPS and short 5-year Treasuries, each leg with a DV01 of $40k. The TIPS real yield falls 30bp and the Treasury yield falls 20bp. What is the approximate P&amp;L?</p>
+<ol class="opts">
+  <li>+$400k</li>
+  <li>+$2.0m</li>
+  <li>−$400k</li>
+  <li>+$1.2m</li>
+</ol>
+</div>
+
+<div class="q" id="q3">
+<p class="qtext"><span class="qnum">3.</span> Oil jumps and short-dated nominal yields fall sharply on the same day. Which interpretation is most consistent with that?</p>
+<ol class="opts">
+  <li>Inflation expectations must have fallen, because yields fell.</li>
+  <li>The market priced mainly a growth hit: the expected policy path and real yields fell by more than breakevens rose.</li>
+  <li>The term premium must have collapsed, because oil is inflationary.</li>
+  <li>The TIPS index lag stops yields reacting to oil within the week.</li>
+</ol>
+</div>
+<details class="reveal">
+<summary>Answers — tap here, or turn the page · Story I</summary>
+<div class="answers-page">
+<div class="ans" id="a1">
+<p class="verdict">1. C — 2.40%.</p>
+<p class="why">BE = 4.00% − 1.60% = 2.40%.</p>
+<p class="why"><i>A</i> adds the two yields. <i>B</i> divides 4.00 by 1.60, a ratio instead of a spread. <i>D</i> is the real yield itself.</p>
+</div>
+<div class="ans" id="a2">
+<p class="verdict">2. A — about +$400k.</p>
+<p class="why">Long TIPS gains when real yields fall: 30 × $40k = +$1.2m. Short Treasuries lose when yields fall: 20 × $40k = −$0.8m. Net +$0.4m, which is the 10bp breakeven widening times $40k.</p>
+<p class="why"><i>B</i> adds the absolute moves (50bp). <i>C</i> has the sign wrong. <i>D</i> counts only the TIPS leg.</p>
+</div>
+<div class="ans" id="a3">
+<p class="verdict">3. B — a growth hit dominated.</p>
+<p class="why">The nominal yield is real yield plus breakeven. For it to fall while an inflationary shock hits, the fall in real yields and the expected policy path must exceed any rise in breakevens.</p>
+<p class="why"><i>A</i> confuses the nominal move with the breakeven move. <i>C</i> infers a term-premium collapse from oil, which does not follow. <i>D</i> mixes up the accrual index with market pricing: yields reprice at once.</p>
+</div>
+</div>
+</details>
+</div>
+
+<!-- ================= STORY II ================= -->
+<div class="page" id="s2">
+<p class="kicker" style="text-indent:0">Private Credit · Fund Structures · Story II</p>
+<h2 class="headline">A 5% Cap Meets a 39% Request</h2>
+<p class="deck">Non-traded BDCs sell a quarterly exit. The tender mechanics decide how long that exit actually takes.</p>
+<p class="byline">From our credit desk</p>
+
+<p class="label">The News</p>
+<p class="first"><span class="dropcap">T</span><span class="dateline">Filings</span> — According to an SEC Form 8-K, Blue Owl Technology Income Corp. received estimated repurchase requests of 39.0% of its shares outstanding in the third quarter of 2026. It said it would fulfil its tender offer of 5%, with pro-rata fills. Separately, an SEC tender-offer filing from Onex Direct Lending BDC Fund says the fund authorised a cash tender for up to 5% of its outstanding shares, expiring at 11:59 p.m. New York time on 6 November 2026 unless extended.</p>
+
+<p class="label">The Plumbing</p>
+
+<h3 class="sub">1. A tender is not a redemption right</h3>
+<p class="first">A non-traded BDC does not owe holders their NAV on demand. The board chooses, each quarter, to make an issuer tender offer for a stated percentage of shares, commonly 5% of the total. If tendered shares exceed that amount, the fund buys the same <i>fraction</i> of each holder’s request:</p>
+<p class="formula">fill = cap ÷ requests</p>
+<p class="working">illustrative: 5% ÷ 20% = 25% of each request is paid</p>
+<p>This is a structural limit announced in advance. It is different from a suspension, where the fund stops paying altogether.</p>
+
+<h3 class="sub">2. The queue</h3>
+<p class="first">An investor who wants out in full, and resubmits the unfilled part each quarter, gets paid a fraction of what is left. If the fill ratio is <i>f</i> every quarter, the share still invested after <i>n</i> quarters is:</p>
+<p class="formula">remaining = (1 − <i>f</i>)<sup><i>n</i></sup></p>
+<table class="figs">
+  <caption>Figures box · exit queue (illustrative numbers)</caption>
+  <tr><th>Requests / cap</th><th class="n">Fill</th><th class="n">Left after 4 qtrs</th></tr>
+  <tr><td>10% / 5%</td><td class="n">50%</td><td class="n">6%</td></tr>
+  <tr><td>20% / 5%</td><td class="n">25%</td><td class="n">32%</td></tr>
+  <tr><td>39% / 5%</td><td class="n">12.8%</td><td class="n">58%</td></tr>
+</table>
+<p class="note">Assumes requests stay at the same level each quarter and the investor resubmits everything.</p>
+<p class="first">There is a feedback loop. An investor who expects a 25% fill and wants $10m must ask for $40m. Rational over-requesting inflates the request ratio, which cuts the fill ratio, which prompts more over-requesting.</p>
+
+<h3 class="sub">3. Where the cash comes from</h3>
+<p class="first">The fund funds a tender from loan repayments, cash, liquid assets and its credit facility. Each tender shrinks equity, so leverage and the share of illiquid assets rise for those who stay unless new subscriptions arrive. Loan marks are Level 3 and set by the manager’s valuation process, so the NAV used for the tender can lag where the loans would trade. That makes the exit price itself a question for diligence.</p>
+
+<p class="label">Why It Matters for a Fund Analyst</p>
+<ul class="checks">
+  <li><b>Ask for fill ratios and request ratios by quarter</b>, and for the number of investors who resubmitted.</li>
+  <li><b>Ask for sources of liquidity</b> against a full 5% tender: quarterly repayments, liquid sleeve, undrawn facility.</li>
+  <li><b>Ask whether the board has ever tendered above or below the usual cap</b>, and what rule it follows.</li>
+</ul>
+
+<p class="tags">Concepts: <b>AL-GATES</b> · <b>AL-EVERGREEN</b> · DD-LIQ-MISMATCH</p>
+<p class="src">Sources: Blue Owl Technology Income Corp., SEC Form 8-K (2026), exhibit; Onex Direct Lending BDC Fund, SEC Form SC TO-I (2026), exhibit.</p>
+<p class="end">— ◆ —</p>
+</div>
+
+<div class="page" id="d2">
+<p class="label">The Drill · Story II</p>
+
+<div class="q" id="q4">
+<p class="qtext"><span class="qnum">4.</span> A non-traded BDC tenders for 5% of its shares. Holders ask to sell 20% of the shares. An investor requested $40m. How much is she paid, assuming a pro-rata fill?</p>
+<ol class="opts">
+  <li>$2m</li>
+  <li>$10m</li>
+  <li>$8m</li>
+  <li>$32m</li>
+</ol>
+</div>
+
+<div class="q" id="q5">
+<p class="qtext"><span class="qnum">5.</span> The fill ratio is 25% each quarter. An investor resubmits her unfilled balance every quarter. About how much of her original position remains after two quarters?</p>
+<ol class="opts">
+  <li>50%</li>
+  <li>25%</li>
+  <li>56%</li>
+  <li>44%</li>
+</ol>
+</div>
+
+<div class="q" id="q6">
+<p class="qtext"><span class="qnum">6.</span> A manager says the 5% cap “is working as designed, so there is no liquidity issue”. What is the best next question?</p>
+<ol class="opts">
+  <li>How does your cap compare with peers’ caps?</li>
+  <li>Is the cap described in the offering documents?</li>
+  <li>What is the fund’s current distribution yield?</li>
+  <li>What were the fill ratios by quarter, and how do quarterly cash inflows compare with tender size?</li>
+</ol>
+</div>
+<details class="reveal">
+<summary>Answers — tap here, or turn the page · Story II</summary>
+<div class="answers-page">
+<div class="ans" id="a4">
+<p class="verdict">4. B — $10m.</p>
+<p class="why">Fill = 5% ÷ 20% = 25%. 25% × $40m = $10m.</p>
+<p class="why"><i>A</i> applies the 5% cap to her own request. <i>C</i> applies the 20% request ratio. <i>D</i> is the part left unpaid.</p>
+</div>
+<div class="ans" id="a5">
+<p class="verdict">5. C — about 56%.</p>
+<p class="why">Each quarter 75% of the balance survives: 0.75 × 0.75 = 0.5625.</p>
+<p class="why"><i>A</i> adds the fills linearly (1 − 2 × 25%) and ignores that the second fill applies to a smaller balance. <i>B</i> is the fill ratio, not the remainder. <i>D</i> is the share already paid out (1 − 0.5625).</p>
+</div>
+<div class="ans" id="a6">
+<p class="verdict">6. D — fill ratios and cash inflows against tender size.</p>
+<p class="why">A cap that is binding every quarter is working as designed and still leaves investors queuing. Fill history shows the queue; inflows show whether tenders can be met without selling loans or levering up.</p>
+<p class="why"><i>A</i> and <i>B</i> are true but irrelevant to the claim. <i>C</i> tests income, not the exit.</p>
+</div>
+</div>
+</details>
+</div>
+
+<!-- ================= STORY III ================= -->
+<div class="page" id="s3">
+<p class="kicker" style="text-indent:0">Market Structure · Repo · Story III</p>
+<h2 class="headline">Treasury Repo Clearing: Netting, Margin and SOFR</h2>
+<p class="deck">The mandate moves bilateral repo into a clearing house. The benchmark may barely change. Dealer balance sheets and borrowers’ margin bills will.</p>
+<p class="byline">From our market-structure desk</p>
+
+<p class="label">The News</p>
+<p class="first"><span class="dropcap">T</span><span class="dateline">Background</span> — The Office of Financial Research has published an analysis, “How the Treasury Clearing Rule for Repo Might Affect SOFR”, which, according to coverage of the post, finds higher volume but minimal effect on the level of SOFR. Crane Data’s summary says the OFR built a hypothetical SOFR that includes bilateral repo, and that 42% of the sampled 2022 pilot volume would have been cleared under the rule. As of the SEC’s August 2026 update, as reported, the compliance date for eligible repo is 30 June 2027. SOFR was 3.88% on 21 October, according to NY Fed data on FRED.</p>
+
+<p class="label">The Plumbing</p>
+
+<h3 class="sub">1. Netting is the prize</h3>
+<p class="first">A dealer borrows cash from money funds and lends it to hedge funds against Treasuries. Bilaterally, each trade sits on its balance sheet gross. At a central counterparty, both trades face the same counterparty, so where accounting conditions are met (same maturity, same master netting terms) offsetting trades can be netted. Gross assets fall, which lowers the leverage-ratio denominator.</p>
+<table class="figs">
+  <caption>Figures box · dealer netting (illustrative numbers)</caption>
+  <tr><th> </th><th class="n">Bilateral</th><th class="n">Cleared</th></tr>
+  <tr><td>Repo + reverse</td><td class="n">$150bn</td><td class="n">$10bn</td></tr>
+  <tr><td>Total exposure</td><td class="n">$900bn</td><td class="n">$760bn</td></tr>
+  <tr><td>Tier 1 $30bn: SLR</td><td class="n">3.33%</td><td class="n">3.95%</td></tr>
+</table>
+<p class="first">Exposure falls by gross $150bn less the net $10bn left, or $140bn. SLR = 30 ÷ 760 = 3.95%. This is the “balance sheet space” argument for clearing. It lets dealers intermediate more Treasury financing for the same capital.</p>
+
+<h3 class="sub">2. Margin is the cost</h3>
+<p class="first">A clearing house collects initial margin (IM) plus daily variation margin. Some bilateral trades are done at a zero haircut, so moving them into clearing creates a new funding need:</p>
+<p class="formula">max position = equity ÷ IM rate</p>
+<p class="working">illustrative: $2bn ÷ 2% = $100bn of Treasuries</p>
+<p>A leveraged relative-value fund must hold margin against every dollar of repo, so its maximum leverage is capped at 1 ÷ IM rate (50× at 2%). Whether margin is posted directly or through a sponsoring dealer decides who bears the balance-sheet cost.</p>
+
+<h3 class="sub">3. Why SOFR need not move</h3>
+<p class="first">SOFR is a volume-weighted median of overnight Treasury repo rates. Adding trades that were previously uncounted changes its <i>composition</i>. If the new trades are priced like those already in, the median barely shifts, even though the quantities of balance sheet and margin underneath it change a lot. The rule dates are regulatory claims as of the sources above and should be spot-checked.</p>
+
+<p class="label">Why It Matters for a Fund Analyst</p>
+<ul class="checks">
+  <li><b>Ask a basis-trade manager about margin at the CCP</b>: IM rate, who posts it, and the stressed IM add-on.</li>
+  <li><b>Ask how financing terms change</b>: does the fund keep access at zero haircut, or is it moving to sponsored clearing?</li>
+  <li><b>Ask about dealer capacity in stress</b>: netting helps in calm markets, but IM rises when volatility does.</li>
+</ul>
+
+<p class="tags">Concepts: <b>MS-TREASURY-CLEARING</b> · <b>FI-REPO</b> · CB-SLR</p>
+<p class="src">Sources: Office of Financial Research blog, “How the Treasury Clearing Rule for Repo Might Affect SOFR”; Crane Data, “OFR: Treasury Clearing, Repo, SOFR”; SEC statement on Treasury clearing implementation (August 2026) and Federal Register notice on compliance dates; FRED, SOFR series (NY Fed).</p>
+<p class="end">— ◆ —</p>
+</div>
+
+<div class="page" id="d3">
+<p class="label">The Drill · Story III</p>
+
+<div class="q" id="q7">
+<p class="qtext"><span class="qnum">7.</span> A dealer has $900bn of leverage exposure and $30bn of Tier 1 capital. It clears $80bn of reverse repo and $70bn of repo, all nettable, leaving a net $10bn. What is its leverage ratio afterwards?</p>
+<ol class="opts">
+  <li>3.33%</li>
+  <li>3.61%</li>
+  <li>3.95%</li>
+  <li>4.00%</li>
+</ol>
+</div>
+
+<div class="q" id="q8">
+<p class="qtext"><span class="qnum">8.</span> A fund has $2bn of equity and a CCP charges a 2% initial margin on repo. Ignoring variation margin and other uses of equity, what is the largest Treasury position it can finance?</p>
+<ol class="opts">
+  <li>$100bn</li>
+  <li>$40m</li>
+  <li>$2.04bn</li>
+  <li>$10bn</li>
+</ol>
+</div>
+
+<div class="q" id="q9">
+<p class="qtext"><span class="qnum">9.</span> A strategist says the clearing rule is irrelevant because the effect on the SOFR level is small. What is the best reply?</p>
+<ol class="opts">
+  <li>SOFR will fall by the amount of initial margin collected.</li>
+  <li>Clearing removes all counterparty risk, so repo spreads vanish.</li>
+  <li>The rule matters only for money market funds, not for dealers.</li>
+  <li>The benchmark level is one outcome; netting and margin still change dealer capacity and fund leverage.</li>
+</ol>
+</div>
+<details class="reveal">
+<summary>Answers — tap here, or turn the page · Story III</summary>
+<div class="answers-page">
+<div class="ans" id="a7">
+<p class="verdict">7. C — 3.95%.</p>
+<p class="why">Gross removed = 80 + 70 = 150, but 10 stays on as the net position, so exposure falls by 140 to 760. 30 ÷ 760 = 3.947%.</p>
+<p class="why"><i>A</i> ignores netting (30 ÷ 900). <i>B</i> removes only the smaller leg (30 ÷ 830). <i>D</i> removes all $150bn and forgets the residual $10bn (30 ÷ 750).</p>
+</div>
+<div class="ans" id="a8">
+<p class="verdict">8. A — $100bn.</p>
+<p class="why">Position × 2% ≤ $2bn, so position ≤ $2bn ÷ 0.02 = $100bn, which is 50× leverage.</p>
+<p class="why"><i>B</i> multiplies equity by the margin rate instead of dividing. <i>C</i> divides by 0.98, treating the haircut as a financing share. <i>D</i> slips a decimal (÷ 20%).</p>
+</div>
+<div class="ans" id="a9">
+<p class="verdict">9. D — capacity and leverage change even if SOFR does not.</p>
+<p class="why">A benchmark’s median can be stable while the volume of netting and the margin held change. Both feed through to dealer intermediation and to borrowers’ maximum leverage.</p>
+<p class="why"><i>A</i> confuses collateral with the price of cash. <i>B</i> overstates what a CCP does: it mutualises and manages risk, it does not remove it. <i>C</i>: dealers are the main beneficiaries of netting.</p>
+</div>
+</div>
+</details>
+</div>
+
+<!-- ================= BACK PAGE ================= -->
+<div class="page" id="back">
+<p class="label">Back Page · Review · first seen 22 Oct.</p>
+<p class="note">A concept from an earlier edition, with a new question.</p>
+<div class="q" id="q10">
+<p class="qtext"><span class="qnum">10.</span> A BDC has total cost of $2,000m and total fair value of $1,900m. Non-accrual loans cost $120m (fair value $60m). A further $100m of cost sits in loans amended or switched to PIK that still accrue. What share of cost is non-accrual or amended/PIK-switched?</p>
+<ol class="opts">
+  <li>6.0%</li>
+  <li>5.0%</li>
+  <li>11.0%</li>
+  <li>11.6%</li>
+</ol>
+</div>
+<details class="reveal">
+<summary>Answers — tap here, or turn the page · Back Page</summary>
+<div class="answers-page">
+<div class="ans" id="a10">
+<p class="verdict">10. C — 11.0%.</p>
+<p class="why">(120 + 100) ÷ 2,000 = 11.0%. For reference, non-accruals alone are 6.0% at cost but 60 ÷ 1,900 = 3.2% at fair value.</p>
+<p class="why"><i>A</i> leaves out the amended/PIK loans. <i>B</i> counts only the amended/PIK loans. <i>D</i> divides cost by fair value (220 ÷ 1,900).</p>
+</div>
+</div>
+</details>
+<p class="colophon">Gio’s Daily Dispatch · 23 October 2026 · Illustrative figures labelled · Not investment advice</p>
+</div>
+
+
+</body>
+</html>
