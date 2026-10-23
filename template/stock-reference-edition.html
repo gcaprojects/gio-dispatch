@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="edition-date" content="2026-10-22">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Value Dispatch</title>
+<style type="text/css">
+/* crengine-safe: block flow, floats, tables, borders, em units. No flex/grid/JS/remote fonts. */
+html { background-color: #fff; }
+body {
+  font-family: "Source Serif 4", "Noto Serif", Georgia, "Times New Roman", serif;
+  color: #000;
+  background-color: #fff;
+  max-width: 38em;
+  margin: 0 auto;
+  padding: 0 0.5em 2em 0.5em;
+  line-height: 1.4;
+}
+p { margin: 0; text-indent: 1.2em; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+p.first, p.noindent { text-indent: 0; }
+a { color: #000; text-decoration: underline; }
+.page { page-break-before: always; }
+
+/* Nameplate */
+.folio-top { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.12em; text-align: center; margin: 0 0 0.4em 0; }
+.nameplate {
+  font-size: 2.4em; font-weight: normal; text-transform: uppercase; letter-spacing: 0.04em;
+  text-align: center; line-height: 1.1; margin: 0; padding: 0.25em 0 0.2em 0;
+  border-top: 5px double #000; border-bottom: 2px solid #000;
+}
+.folio {
+  font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.1em; text-align: center;
+  padding: 0.35em 0; border-bottom: 5px double #000; margin: 0 0 0.6em 0;
+}
+.motto { font-style: italic; text-align: center; text-indent: 0; margin: 0 0 1.2em 0; font-size: 0.95em; }
+
+/* Section labels */
+.label {
+  font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.15em; text-align: center; font-weight: normal;
+  border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 0.2em 0; margin: 1.4em 0 0.7em 0;
+}
+
+/* Ranking index table (front page) */
+table.ranking { width: 100%; border-collapse: collapse; margin: 0 0 1.2em 0; font-size: 0.85em; }
+table.ranking th { text-align: left; font-weight: normal; font-style: italic; border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 0.25em 0.3em; }
+table.ranking td { padding: 0.25em 0.3em; border-bottom: 1px solid #000; vertical-align: top; }
+table.ranking td.r, table.ranking th.r { text-align: right; }
+table.ranking td.c, table.ranking th.c { text-align: center; }
+table.ranking td.num { font-size: 1.1em; font-weight: bold; text-align: center; }
+
+/* Metrics box (per stock) */
+table.metrics { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 0.85em;
+  border-top: 2px solid #000; border-bottom: 2px solid #000; }
+table.metrics caption { font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.1em; text-align: left; padding: 0 0 0.3em 0; }
+table.metrics th { text-align: left; font-weight: normal; font-style: italic; border-bottom: 2px solid #000; padding: 0.25em 0.3em; }
+table.metrics td { padding: 0.2em 0.3em; border-bottom: 1px solid #000; vertical-align: top; }
+table.metrics td.v { text-align: right; font-weight: bold; }
+table.metrics td.l { text-align: left; }
+
+/* Story */
+h2.headline { font-size: 1.5em; font-weight: bold; line-height: 1.15; margin: 0.15em 0 0.2em 0; text-align: left; }
+.ticker { font-size: 0.9em; font-family: "Courier New", Courier, monospace; letter-spacing: 0.05em; }
+.meta { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.08em; text-indent: 0;
+  border-top: 2px solid #000; padding: 0.3em 0 0 0; margin: 0 0 0.6em 0; }
+h3.sub { font-size: 0.95em; font-weight: bold; font-style: italic; margin: 1em 0 0.3em 0; text-align: left; }
+.note { font-size: 0.85em; font-style: italic; text-indent: 0; margin: 0.5em 0; }
+
+/* Lists */
+ul.checks { margin: 0.4em 0 0.4em 0; padding: 0 0 0 1.2em; }
+ul.checks li { margin: 0 0 0.3em 0; text-align: justify; }
+
+.analyst-note { text-indent: 0; font-style: italic; border-left: 2px solid #000; padding: 0 0 0 0.8em; margin: 0.6em 0; }
+.end { text-align: center; text-indent: 0; margin: 1.2em 0 0 0; font-size: 0.9em; letter-spacing: 0.3em; }
+.src { font-size: 0.8em; font-style: italic; text-indent: 0; margin: 0.4em 0 0 0; }
+.colophon { font-size: 0.8em; text-align: center; text-indent: 0; border-top: 5px double #000; padding: 0.5em 0 0 0; margin: 2em 0 0 0; letter-spacing: 0.05em; }
+.sig-badge { font-size: 0.75em; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid #000; padding: 0 0.3em; margin: 0 0.2em; }
+</style>
+</head>
+<body>
+
+<!-- ================= FRONT PAGE ================= -->
+<div id="front">
+<p class="folio-top">Est. 2026 &#183; Buffett / Gross Value Philosophy</p>
+<h1 class="nameplate">Value Dispatch</h1>
+<p class="folio">No. 1 &#183; Friday, 24 October 2026 &#183; Top-10 Value Picks</p>
+<p class="motto">Undervalued. Dropped. Signalled.</p>
+
+<p class="label">Top 10 This Edition</p>
+<table class="ranking">
+  <tr>
+    <th class="c">#</th>
+    <th>Ticker &#183; Name</th>
+    <th>Sector</th>
+    <th class="r">Score</th>
+    <th class="r">MoS%</th>
+    <th class="c">Sig</th>
+  </tr>
+  <tr>
+    <td class="num">1</td>
+    <td><a href="#s1"><span class="ticker">MSFT</span> &#183; Microsoft Corp</a></td>
+    <td>Technology</td>
+    <td class="r">84</td>
+    <td class="r">28%</td>
+    <td class="c">A I</td>
+  </tr>
+  <tr>
+    <td class="num">2</td>
+    <td><a href="#s2"><span class="ticker">JNJ</span> &#183; Johnson &#38; Johnson</a></td>
+    <td>Health Care</td>
+    <td class="r">79</td>
+    <td class="r">22%</td>
+    <td class="c">A</td>
+  </tr>
+  <!-- Add picks 3–10 following the same pattern -->
+</table>
+<p class="note">MoS = (analyst consensus target &#8722; price) &#247; target, or DCF estimate where noted. Signals: A = analyst Buy consensus, I = insider open-market buy (90d), C = Congress purchase (90d). All figures from search results dated DATE; verify before acting.</p>
+
+<p class="label">Analyst Note of the Day</p>
+<p class="analyst-note">&#8220;[One sentence on the common thread or macro context linking today&#8217;s picks.]&#8221;</p>
+</div>
+
+<!-- ================= PICK 1 ================= -->
+<div class="page" id="s1">
+<p class="meta">Technology &#183; Pick 1 &#183; <span class="sig-badge">A</span> <span class="sig-badge">I</span></p>
+<h2 class="headline">Microsoft Corp <span class="ticker">(MSFT &#183; NASDAQ &#183; US)</span></h2>
+
+<p class="label">What It Does</p>
+<p class="first">[~60-word description: what the company sells, to whom, competitive position. Plain English, present tense, no hype. Source: latest 10-K Item 1 or annual report.]</p>
+
+<p class="label">Key Catalyst</p>
+<ul class="checks">
+  <li><b>[DATE]</b> &#8212; [Catalyst description. What happened and why it matters for value. Source attribution.] <i>([Source name])</i></li>
+</ul>
+
+<p class="label">Metrics</p>
+<table class="metrics">
+  <tr><th class="l">Metric</th><th class="l">Value</th><th class="l">Metric</th><th class="l">Value</th></tr>
+  <tr><td>Price</td><td class="v">$000</td><td>Analyst target</td><td class="v">$000</td></tr>
+  <tr><td>Margin of safety</td><td class="v">00%</td><td>% vs 200DMA</td><td class="v">&#8722;00%</td></tr>
+  <tr><td>P/E (TTM)</td><td class="v">00&#215;</td><td>FCF yield</td><td class="v">0.0%</td></tr>
+  <tr><td>EV/EBITDA</td><td class="v">00&#215;</td><td>ROIC (avg)</td><td class="v">00%</td></tr>
+  <tr><td>Net debt/EBITDA</td><td class="v">0.0&#215;</td><td>Signals</td><td class="v">A I</td></tr>
+</table>
+
+<p class="label">Why It Fits a Value Lens</p>
+<ul class="checks">
+  <li><b>Moat / quality:</b> [One bullet citing ROIC and competitive advantage.]</li>
+  <li><b>Price vs value:</b> [One bullet citing margin of safety and FCF yield vs history.]</li>
+</ul>
+
+<p class="label">Key Risk</p>
+<ul class="checks">
+  <li>[One bullet: the most likely way this is a value trap or the thesis breaks.]</li>
+</ul>
+
+<p class="src">Sources: [Outlet, headline, date]; [Outlet, headline, date].</p>
+<p class="end">&#8212; &#9670; &#8212;</p>
+</div>
+
+<!-- ================= PICKS 2–10: same pattern as Pick 1 ================= -->
+<!-- Each pick gets its own <div class="page" id="sN"> block -->
+
+<!-- ================= COLOPHON ================= -->
+<p class="colophon">Value Dispatch &#183; Not investment advice &#183; Figures from public sources; verify before acting &#183; The author may hold positions &#183; Insider and Congressional disclosures may lag by up to 45 days</p>
+
+</body>
+</html>

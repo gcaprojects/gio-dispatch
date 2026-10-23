@@ -1,8 +1,10 @@
 --[[
-Financial Dispatch for KOReader.
+Gio's Dispatch for KOReader — two channels:
+  Financial Dispatch  <base>/latest.html        (daily market concepts + drill)
+  Value Dispatch      <base>/stock-latest.html  (daily top-10 value stock picks)
 
-Fetches <base>/latest.html, keeps a dated copy in koreader/giodispatch/,
-and opens it in the reader. With no connection it opens the newest copy.
+Each channel keeps its own dated copies in koreader/giodispatch/.
+With no connection it opens the newest copy already on the device.
 ]]
 
 local DataStorage = require("datastorage")
@@ -24,6 +26,12 @@ local DEFAULT_BASE = "https://gcaprojects.github.io/gio-dispatch/"
 local DIR = DataStorage:getDataDir() .. "/giodispatch/"
 local KEEP_DAYS = 30
 
+-- file prefix distinguishes the two channels
+local CHANNEL = {
+    financial = { prefix = "",       latest = "latest.html",       label = "Financial Dispatch" },
+    stock     = { prefix = "stock-", latest = "stock-latest.html", label = "Value Dispatch"    },
+}
+
 local GioDispatch = WidgetContainer:extend{
     name = "giodispatch",
     is_doc_only = false,
@@ -36,20 +44,19 @@ function GioDispatch:init()
     self.ui.menu:registerToMainMenu(self)
 end
 
--- Lets gestures and the Bookshelf start menu open today's edition.
 function GioDispatch:onDispatcherRegisterActions()
     Dispatcher:registerAction("giodispatch_today", {
-        category = "none",
-        event = "GioDispatchToday",
-        title = _("Financial Dispatch: today's edition"),
-        general = true,
+        category = "none", event = "GioDispatchToday",
+        title = _("Financial Dispatch: today's edition"), general = true,
+    })
+    Dispatcher:registerAction("giodispatch_stocks", {
+        category = "none", event = "GioDispatchStocks",
+        title = _("Value Dispatch: today's picks"), general = true,
     })
 end
 
-function GioDispatch:onGioDispatchToday()
-    self:fetchAndOpen()
-    return true
-end
+function GioDispatch:onGioDispatchToday()  self:fetchAndOpen("financial") return true end
+function GioDispatch:onGioDispatchStocks() self:fetchAndOpen("stock")     return true end
 
 function GioDispatch:base()
     local base = self.settings:readSetting("base_url", DEFAULT_BASE)
@@ -59,16 +66,24 @@ end
 
 function GioDispatch:addToMainMenu(menu_items)
     menu_items.gio_dispatch = {
-        text = _("Financial Dispatch"),
+        text = _("Gio's Dispatch"),
         sorting_hint = "tools",
         sub_item_table = {
             {
-                text = _("Today's edition"),
-                callback = function() self:fetchAndOpen() end,
+                text = _("Financial Dispatch — today's edition"),
+                callback = function() self:fetchAndOpen("financial") end,
             },
             {
-                text = _("Open last downloaded edition"),
-                callback = function() self:openNewest(false) end,
+                text = _("Financial Dispatch — last downloaded"),
+                callback = function() self:openNewest("financial", false) end,
+            },
+            {
+                text = _("Value Dispatch — today's picks"),
+                callback = function() self:fetchAndOpen("stock") end,
+            },
+            {
+                text = _("Value Dispatch — last downloaded"),
+                callback = function() self:openNewest("stock", false) end,
             },
             {
                 text = _("Set edition URL"),
@@ -79,8 +94,6 @@ function GioDispatch:addToMainMenu(menu_items)
     }
 end
 
--- Download url to path via a .part file, so a dropped connection never
--- leaves a half-written edition behind.
 local function download(url, path)
     local fh = io.open(path .. ".part", "wb")
     if not fh then return false end
@@ -98,7 +111,6 @@ local function download(url, path)
     return os.rename(path .. ".part", path)
 end
 
--- Editions carry <meta name="edition-date" content="YYYY-MM-DD">.
 local function editionDate(path)
     local f = io.open(path, "rb")
     if not f then return end
@@ -107,17 +119,18 @@ local function editionDate(path)
     return head:match('name="edition%-date"%s+content="(%d%d%d%d%-%d%d%-%d%d)"')
 end
 
-local function listEditions()
+local function listEditions(prefix)
+    local pat = "^" .. (prefix or "") .. "%d%d%d%d%-%d%d%-%d%d%.html$"
     local files = {}
     for name in lfs.dir(DIR) do
-        if name:match("^%d%d%d%d%-%d%d%-%d%d%.html$") then table.insert(files, name) end
+        if name:match(pat) then table.insert(files, name) end
     end
-    table.sort(files) -- ISO dates sort chronologically
+    table.sort(files)
     return files
 end
 
-local function prune()
-    local files = listEditions()
+local function prune(prefix)
+    local files = listEditions(prefix)
     for i = 1, #files - KEEP_DAYS do os.remove(DIR .. files[i]) end
 end
 
@@ -126,36 +139,40 @@ local function openFile(path)
     ReaderUI:showReader(path)
 end
 
-function GioDispatch:openNewest(after_failed_fetch)
-    local files = listEditions()
+function GioDispatch:openNewest(channel, after_failed_fetch)
+    local ch = CHANNEL[channel]
+    local files = listEditions(ch.prefix)
     if #files == 0 then
-        UIManager:show(InfoMessage:new{ text = _("No edition downloaded yet. Connect to Wi-Fi and try again.") })
+        UIManager:show(InfoMessage:new{
+            text = _("No " .. ch.label .. " edition downloaded yet. Connect to Wi-Fi and try again."),
+        })
         return
     end
     if after_failed_fetch then
         UIManager:show(InfoMessage:new{
-            text = _("Couldn't fetch today's edition. Opening the last one: ") .. files[#files]:sub(1, 10),
+            text = _("Couldn't fetch today's " .. ch.label .. ". Opening: ") .. files[#files]:sub(#ch.prefix + 1, #ch.prefix + 10),
             timeout = 3,
         })
     end
     openFile(DIR .. files[#files])
 end
 
-function GioDispatch:fetchAndOpen()
+function GioDispatch:fetchAndOpen(channel)
+    local ch = CHANNEL[channel]
     NetworkMgr:runWhenOnline(function()
-        local msg = InfoMessage:new{ text = _("Fetching today's edition…") }
+        local msg = InfoMessage:new{ text = _("Fetching " .. ch.label .. "…") }
         UIManager:show(msg)
         UIManager:forceRePaint()
-        local tmp = DIR .. "latest.html"
-        local ok = download(self:base() .. "latest.html", tmp)
+        local tmp = DIR .. ch.latest
+        local ok = download(self:base() .. ch.latest, tmp)
         UIManager:close(msg)
         local date = ok and editionDate(tmp)
         if not date then
-            return self:openNewest(true)
+            return self:openNewest(channel, true)
         end
-        local path = DIR .. date .. ".html"
+        local path = DIR .. ch.prefix .. date .. ".html"
         os.rename(tmp, path)
-        prune()
+        prune(ch.prefix)
         NetworkMgr:afterWifiAction()
         openFile(path)
     end)
