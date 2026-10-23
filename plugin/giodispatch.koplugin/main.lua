@@ -1,7 +1,6 @@
 --[[
-Gio's Dispatch for KOReader — two channels:
-  Financial Dispatch  <base>/latest.html        (daily market concepts + drill)
-  Stock Dispatch      <base>/stock-latest.html  (daily top-10 value stock picks)
+Gio's Dispatch for KOReader — Financial Dispatch channel:
+  Financial Dispatch  <base>/latest.html  (daily market concepts + drill)
 
 Each channel keeps its own dated copies in koreader/giodispatch/.
 With no connection it opens the newest copy already on the device.
@@ -26,10 +25,8 @@ local DEFAULT_BASE = "https://gcaprojects.github.io/gio-dispatch/"
 local DIR = DataStorage:getDataDir() .. "/giodispatch/"
 local KEEP_DAYS = 30
 
--- file prefix distinguishes the two channels
 local CHANNEL = {
     financial = { prefix = "",       latest = "latest.html",       label = "Financial Dispatch" },
-    stock     = { prefix = "stock-", latest = "stock-latest.html", label = "Stock Dispatch"    },
 }
 
 local GioDispatch = WidgetContainer:extend{
@@ -49,14 +46,9 @@ function GioDispatch:onDispatcherRegisterActions()
         category = "none", event = "GioDispatchToday",
         title = _("Financial Dispatch: today's edition"), general = true,
     })
-    Dispatcher:registerAction("giodispatch_stocks", {
-        category = "none", event = "GioDispatchStocks",
-        title = _("Stock Dispatch: today's picks"), general = true,
-    })
 end
 
-function GioDispatch:onGioDispatchToday()  self:fetchAndOpen("financial") return true end
-function GioDispatch:onGioDispatchStocks() self:fetchAndOpen("stock")     return true end
+function GioDispatch:onGioDispatchToday() self:fetchAndOpen("financial") return true end
 
 function GioDispatch:base()
     local base = self.settings:readSetting("base_url", DEFAULT_BASE)
@@ -76,14 +68,6 @@ function GioDispatch:addToMainMenu(menu_items)
             {
                 text = _("Financial Dispatch — last downloaded"),
                 callback = function() self:openNewest("financial", false) end,
-            },
-            {
-                text = _("Stock Dispatch — today's picks"),
-                callback = function() self:fetchAndOpen("stock") end,
-            },
-            {
-                text = _("Stock Dispatch — last downloaded"),
-                callback = function() self:openNewest("stock", false) end,
             },
             {
                 text = _("Set edition URL"),
