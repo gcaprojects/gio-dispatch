@@ -1,3 +1,5 @@
 {
+  "schema_version": 2,
+  "note": "v2 schema: each edition stores per-pick sub-scores and price_track for attribution. Previous editions stored under schema_version 1 had only tickers.",
   "editions": []
 }

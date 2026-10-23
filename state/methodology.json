@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "weights": {
+    "valuation":    0.35,
+    "quality_moat": 0.30,
+    "balance_sheet": 0.15,
+    "signals":      0.15,
+    "technical_dip": 0.05
+  },
+  "screening_thresholds": {
+    "pe_max":          18,
+    "fcf_yield_min":   5.0,
+    "ev_ebitda_max":   12,
+    "mos_min_pct":     15,
+    "vs_200dma_max":    0,
+    "require_signal":  true
+  },
+  "signal_definitions": {
+    "A": "Analyst Buy consensus >= 55% (Buy / (Buy+Hold+Sell))",
+    "I": "Insider open-market purchase (Form 4, last 90 days, excludes option exercises)",
+    "C": "US Congressional purchase disclosure (last 90 days)"
+  },
+  "attribution_history": [],
+  "methodology_notes": [
+    "2026-10-27 v1: Initial weights set per Buffett/Gross value philosophy — valuation-heavy (0.35) with strong quality emphasis (0.30). Signals at 0.15 reflecting high predictive evidence from academic literature on insider buying. Technical dip (0.05) kept minimal as dip alone is not a value signal."
+  ],
+  "weight_update_policy": {
+    "min_attributions_required": 3,
+    "max_change_per_factor_per_run": 0.03,
+    "floor_per_factor": 0.05,
+    "ceiling_per_factor": 0.50,
+    "blackout_months": [1, 4, 7, 10],
+    "note": "Blackout months are earnings seasons (Jan, Apr, Jul, Oct) where broad market noise drowns out factor signals."
+  },
+  "last_updated": "2026-10-27"
+}
