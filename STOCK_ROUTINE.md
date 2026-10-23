@@ -50,23 +50,31 @@ Default thresholds:     P/E ≤ 18×, FCF yield ≥ 5%, EV/EBITDA ≤ 12×,
 For each edition in the last 28 calendar days:
   For each pick whose last tracked price is more than 3 days old (or has never been tracked):
 
-    1. Web search: `"[TICKER] stock price today site:finance.yahoo.com OR marketwatch.com"`
-       Record today's closing/last price. If two sources disagree by > 1%, use the lower.
+    1. **Get today's price** — try in this order, stop at first success:
 
-    2. Calculate:
-       - return_since_pick = (today_price - pick_price) / pick_price
-       - If edition is ≥ 7 days old: record as `7d_return`
-       - If edition is ≥ 14 days old: record as `14d_return`
-       - If edition is ≥ 28 days old: record as `28d_return`
+       a. WebFetch `https://www.morningstar.com/stocks/[EXCHANGE]/[ticker_lower]/quote`
+          where EXCHANGE is `xnys` (NYSE), `xnas` (NASDAQ), `xase` (AMEX),
+          `xetr` (Frankfurt), `xcph` (Copenhagen). Extract the "Last Price" field.
 
-    3. Also web search: `"S&P 500 index close today"`
-       Record SPX level alongside each tracked price point so you can calculate alpha later.
+       b. WebFetch `https://www.reuters.com/markets/companies/[TICKER].N/`
+          (append `.L` for London, `.PA` for Paris, `.DE` for Frankfurt).
+
+       c. Web search `"[TICKER] stock price"` — extract price from the first snippet
+          that contains a number that looks like a share price.
+
+       If no price is found from any source, skip this pick for this run and note it.
+
+    2. Calculate returns as before (7d / 14d / 28d).
+
+    3. For SPX: WebFetch `https://www.reuters.com/markets/us/` and extract the S&P 500
+       level, OR web search `"S&P 500 index close"` and extract from snippet.
 
 Append updated price_track entries to each pick in stock-history.json.
 Mark any edition where all picks have ≥ 28 days of data as `"tracking_complete": true`.
 
-**Price source hierarchy**: finance.yahoo.com, marketwatch.com, Reuters. Do not use
-real-time data from sources that may be delayed; note in sources if uncertain.
+**Blocked sites** (DNS-blocked in the cloud environment — do NOT attempt WebFetch on these):
+`finance.yahoo.com`, `marketwatch.com`, `stockanalysis.com`, `finviz.com`.
+Use Morningstar, Reuters, Seeking Alpha, or Benzinga instead.
 
 ---
 
@@ -132,33 +140,60 @@ Only run this when `attribution_history` has ≥ 3 completed attributions.
 
 ## Step 4 — Candidate Sourcing
 
-Search for today's candidates using web search (direct market API calls may be blocked).
-Run at least these searches:
+**Important — network policy**: `finance.yahoo.com`, `marketwatch.com`, `stockanalysis.com`
+and `finviz.com` are DNS-blocked in this environment. Use Morningstar, Reuters, Seeking
+Alpha, and Benzinga for data fetches. Web search snippets work fine regardless of domain.
+
+**Phase A — Find candidates via web search** (use present-tense queries, no year in query):
 
 ```
-"cheap US stocks P/E under 18 analyst buy rating October 2026"
-"US value stocks 52-week low insider buying October 2026"
-"undervalued large cap stocks analyst upgrade October 2026"
-"S&P 500 stocks trading below 200 day moving average value"
-"European stocks undervalued low P/E analyst buy October 2026"
-"SEC Form 4 insider open-market purchase large cap October 2026"
-"congressional stock purchase disclosure October 2026"
+undervalued large cap stocks analyst buy rating low P/E
+US value stocks near 52-week low analyst buy
+S&P 500 stocks below 200 day moving average analyst buy
+insider open-market purchase large cap Form 4 recent
+congressional stock purchase recent Act disclosure
+European stocks undervalued low P/E analyst buy
+Morningstar undervalued stocks 4 star 5 star buy
+cheap energy financial healthcare stocks analyst upgrade
 ```
 
-Compile a working list of 20–30 candidates. For each, extract from search snippets:
-- Price, analyst consensus target, P/E, FCF yield (if available)
-- Whether 200DMA is above current price
-- Analyst sentiment (Buy/Hold/Sell counts)
+Each search: scan all snippets and extract any ticker symbol mentioned with a
+buy/undervalued/low-P/E/insider signal. Add it to your working list.
+Aim for 20–30 candidates before screening.
+
+**Phase B — Verify each candidate** with one WebFetch per ticker (Morningstar first):
+
+```
+https://www.morningstar.com/stocks/[EXCHANGE]/[ticker_lower]/quote
+```
+
+From the Morningstar page extract: price, fair value estimate (= analyst target),
+P/E, forward P/E, ROIC, revenue growth, moat rating. If Morningstar fails:
+```
+https://www.reuters.com/markets/companies/[TICKER].N/
+```
+
+For signals specifically:
+- Analyst consensus: search `"[TICKER] analyst consensus buy hold sell target"`
+- Insider: search `"[TICKER] insider purchase Form 4"` — must mention open-market buy
+- Congress: search `"[TICKER] congressional stock purchase disclosure"`
+
+Compile a working list of 20–30 candidates. For each, record:
+- Price, analyst target (MoS = (target − price) / target), P/E, FCF yield if found
+- ROIC, net debt/EBITDA if found — leave blank if not
+- Whether price is below 200DMA (search `"[TICKER] 200 day moving average"`)
+- Analyst sentiment (Buy/Hold/Sell counts if found)
 - Insider or congressional signal (Y/N, date)
 - Sector/GICS
 
 Apply the hard screening gate (from methodology.json thresholds):
-- P/E ≤ threshold (default 18×)
-- FCF yield ≥ threshold (default 5%) — skip if not found in search results
+- P/E ≤ threshold (default 18×) — skip candidates where P/E not found
 - At least one catalyst signal (A, I, or C)
-- MoS ≥ threshold (default 15%) based on analyst consensus target or DCF estimate
+- MoS ≥ threshold (default 15%) based on analyst target or Morningstar fair value
+- FCF yield ≥ threshold if available; if not found, do not penalise but note it
 
-Reject any candidate you cannot find at least 2 independent price/ratio sources for.
+Reject any candidate you cannot find a price AND analyst target for from at least
+one accessible source.
 
 Diversification caps: max 3 per GICS sector, max 2 per GICS industry. Include ≥ 1
 European name if any qualifies.
