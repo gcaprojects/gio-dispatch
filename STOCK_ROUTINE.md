@@ -50,31 +50,29 @@ Default thresholds:     P/E ≤ 18×, FCF yield ≥ 5%, EV/EBITDA ≤ 12×,
 For each edition in the last 28 calendar days:
   For each pick whose last tracked price is more than 3 days old (or has never been tracked):
 
-    1. **Get today's price** — try in this order, stop at first success:
+    1. **Get today's price** — Alpha Vantage GLOBAL_QUOTE (primary):
+       ```bash
+       curl -s "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=[TICKER]&apikey=$ALPHA_VANTAGE_KEY"
+       ```
+       Extract `["Global Quote"]["05. price"]`.
+       Sleep 12 seconds between calls (free tier: 5 calls/minute).
 
-       a. WebFetch `https://www.morningstar.com/stocks/[EXCHANGE]/[ticker_lower]/quote`
-          where EXCHANGE is `xnys` (NYSE), `xnas` (NASDAQ), `xase` (AMEX),
-          `xetr` (Frankfurt), `xcph` (Copenhagen). Extract the "Last Price" field.
+       European tickers: append exchange suffix — `.LON` (LSE), `.FRK` (Frankfurt),
+       `.PAR` (Paris), `.AMS` (Amsterdam). Example: `SHEL.LON`, `SAP.FRK`.
 
-       b. WebFetch `https://www.reuters.com/markets/companies/[TICKER].N/`
-          (append `.L` for London, `.PA` for Paris, `.DE` for Frankfurt).
+       If `ALPHA_VANTAGE_KEY` is unset or response is empty/error, fall back to:
+       - Web search `"[TICKER] stock price"` — extract price from first snippet.
 
-       c. Web search `"[TICKER] stock price"` — extract price from the first snippet
-          that contains a number that looks like a share price.
+    2. Calculate returns (7d / 14d / 28d) vs pick_price stored at edition time.
 
-       If no price is found from any source, skip this pick for this run and note it.
-
-    2. Calculate returns as before (7d / 14d / 28d).
-
-    3. For SPX: WebFetch `https://www.reuters.com/markets/us/` and extract the S&P 500
-       level, OR web search `"S&P 500 index close"` and extract from snippet.
+    3. **SPX benchmark** — use SPY as proxy:
+       ```bash
+       curl -s "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=SPY&apikey=$ALPHA_VANTAGE_KEY"
+       ```
+       Compute SPY % return over the same window; use as spx_return for alpha calc.
 
 Append updated price_track entries to each pick in stock-history.json.
 Mark any edition where all picks have ≥ 28 days of data as `"tracking_complete": true`.
-
-**Blocked sites** (DNS-blocked in the cloud environment — do NOT attempt WebFetch on these):
-`finance.yahoo.com`, `marketwatch.com`, `stockanalysis.com`, `finviz.com`.
-Use Morningstar, Reuters, Seeking Alpha, or Benzinga instead.
 
 ---
 
@@ -161,39 +159,58 @@ Each search: scan all snippets and extract any ticker symbol mentioned with a
 buy/undervalued/low-P/E/insider signal. Add it to your working list.
 Aim for 20–30 candidates before screening.
 
-**Phase B — Verify each candidate** with one WebFetch per ticker (Morningstar first):
+**Phase B — Verify each candidate via Alpha Vantage** (sleep 12 s between every call):
 
+**B1 — OVERVIEW** (one call per candidate, covers most screening criteria):
+```bash
+curl -s "https://www.alphavantage.co/query?function=OVERVIEW&symbol=[TICKER]&apikey=$ALPHA_VANTAGE_KEY"
 ```
-https://www.morningstar.com/stocks/[EXCHANGE]/[ticker_lower]/quote
-```
+Extract:
+- `Name`, `Sector`, `Industry`, `Description`, `Exchange`
+- `PERatio`, `ForwardPE`, `EVToEBITDA`
+- `ReturnOnEquityTTM` — use as ROIC proxy when ROIC not separately available
+- `AnalystTargetPrice` → MoS = (AnalystTargetPrice − price) / AnalystTargetPrice
+- `DividendYield`, `MarketCapitalization`
+- `52WeekHigh`, `52WeekLow`, `200DayMovingAverage`
+- `AnalystRatingStrongBuy`, `AnalystRatingBuy`, `AnalystRatingHold`,
+  `AnalystRatingSell`, `AnalystRatingStrongSell`
+  → Buy% = (StrongBuy + Buy) / total; flag signal A if Buy% ≥ 55%
 
-From the Morningstar page extract: price, fair value estimate (= analyst target),
-P/E, forward P/E, ROIC, revenue growth, moat rating. If Morningstar fails:
-```
-https://www.reuters.com/markets/companies/[TICKER].N/
-```
+Reject candidate if response is `{"Information": ...}` (rate limit) — note and retry
+after 60 s. Reject if both `PERatio` and `AnalystTargetPrice` are "None" or empty.
 
-For signals specifically:
-- Analyst consensus: search `"[TICKER] analyst consensus buy hold sell target"`
-- Insider: search `"[TICKER] insider purchase Form 4"` — must mention open-market buy
-- Congress: search `"[TICKER] congressional stock purchase disclosure"`
+European tickers: suffix `.LON` (LSE), `.FRK` (Frankfurt), `.PAR` (Paris), `.AMS` (Amsterdam).
 
-Compile a working list of 20–30 candidates. For each, record:
-- Price, analyst target (MoS = (target − price) / target), P/E, FCF yield if found
-- ROIC, net debt/EBITDA if found — leave blank if not
-- Whether price is below 200DMA (search `"[TICKER] 200 day moving average"`)
-- Analyst sentiment (Buy/Hold/Sell counts if found)
-- Insider or congressional signal (Y/N, date)
+**B2 — FCF** (only for candidates passing the P/E gate, ~15–20 names):
+```bash
+curl -s "https://www.alphavantage.co/query?function=CASH_FLOW&symbol=[TICKER]&apikey=$ALPHA_VANTAGE_KEY"
+```
+FCF = `annualReports[0].operatingCashflow` − `annualReports[0].capitalExpenditures`
+FCF yield = FCF ÷ MarketCapitalization × 100
+
+**B3 — Insider signal** (only for the top-20 shortlist by composite score):
+```bash
+curl -s "https://www.alphavantage.co/query?function=INSIDER_TRANSACTIONS&symbol=[TICKER]&apikey=$ALPHA_VANTAGE_KEY"
+```
+Flag signal I if any entry in the last 90 days has `acquisition_or_disposal == "A"`.
+
+**Congressional signal** (C): web search `"[TICKER] congressional stock purchase disclosure"`
+— flag only if a credible result (Capitol Trades, Quiver Quant, or official disclosure) is found.
+
+Compile working list. For each candidate record:
+- Price (from Step 1 or GLOBAL_QUOTE), analyst target, MoS, P/E, FCF yield
+- ROIC (ReturnOnEquityTTM proxy), net debt/EBITDA if in OVERVIEW
+- 200DMA vs price, 52-week high/low
+- Analyst Buy%, insider/congressional signal (Y/N, date)
 - Sector/GICS
 
 Apply the hard screening gate (from methodology.json thresholds):
-- P/E ≤ threshold (default 18×) — skip candidates where P/E not found
-- At least one catalyst signal (A, I, or C)
-- MoS ≥ threshold (default 15%) based on analyst target or Morningstar fair value
-- FCF yield ≥ threshold if available; if not found, do not penalise but note it
+- PERatio ≤ pe_max (default 18×) — skip if PERatio is "None" or missing
+- MoS ≥ mos_min_pct (default 15%) from AnalystTargetPrice
+- At least one signal: A, I, or C
+- FCF yield ≥ fcf_yield_min if found; if not found, do not penalise but note it
 
-Reject any candidate you cannot find a price AND analyst target for from at least
-one accessible source.
+Reject any candidate with no valid price + analyst target.
 
 Diversification caps: max 3 per GICS sector, max 2 per GICS industry. Include ≥ 1
 European name if any qualifies.
