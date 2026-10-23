@@ -1,5 +1,5 @@
 --[[
-Gio's Daily Dispatch for KOReader.
+Financial Dispatch for KOReader.
 
 Fetches <base>/latest.html, keeps a dated copy in koreader/giodispatch/,
 and opens it in the reader. With no connection it opens the newest copy.
@@ -41,7 +41,7 @@ function GioDispatch:onDispatcherRegisterActions()
     Dispatcher:registerAction("giodispatch_today", {
         category = "none",
         event = "GioDispatchToday",
-        title = _("Gio's Daily Dispatch: today's edition"),
+        title = _("Financial Dispatch: today's edition"),
         general = true,
     })
 end
@@ -59,7 +59,7 @@ end
 
 function GioDispatch:addToMainMenu(menu_items)
     menu_items.gio_dispatch = {
-        text = _("Gio's Daily Dispatch"),
+        text = _("Financial Dispatch"),
         sorting_hint = "tools",
         sub_item_table = {
             {

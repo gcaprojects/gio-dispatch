@@ -1,4 +1,4 @@
-# Gio's Daily Dispatch
+# Financial Dispatch
 
 A daily, newspaper-style edition for a fund research analyst: 3 market stories, the technical plumbing underneath each, and a multiple-choice drill. It is read on a Kindle through KOReader.
 
