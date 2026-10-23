@@ -1,39 +1,454 @@
-<!DOCTYPE html>
-<html lang="en-GB">
-<head>
-<meta charset="utf-8">
-<meta name="edition-date" content="2026-10-23">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Value Dispatch</title>
-<style type="text/css">
-html { background-color: #fff; }
+<title>JNJ — Stock Dispatch</title>
+<meta name="edition-date" content="2026-10-27">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300;1,8..60,400;1,8..60,600&family=IM+Fell+English:ital@0;1&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+/* ── Tokens ── */
+:root {
+  --ink:    #111;
+  --paper:  #f8f6f1;
+  --rule:   #111;
+  --dim:    #555;
+  --mid:    #999;
+  --faint:  #e0dcd4;
+  --bar:    #666;
+  --pos:    #2a5c27;
+  --neg:    #8b1a1a;
+  --hover:  rgba(0,0,0,0.04);
+  --badge:  #f0ede6;
+  --tab-bg: #eceae4;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink:    #ddd9cf;
+    --paper:  #161410;
+    --rule:   #c8c4b8;
+    --dim:    #999;
+    --mid:    #555;
+    --faint:  #2a2820;
+    --bar:    #8a8078;
+    --pos:    #78b874;
+    --neg:    #c98080;
+    --hover:  rgba(255,255,255,0.05);
+    --badge:  #1e1c18;
+    --tab-bg: #1a1816;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ink:    #ddd9cf;
+  --paper:  #161410;
+  --rule:   #c8c4b8;
+  --dim:    #999;
+  --mid:    #555;
+  --faint:  #2a2820;
+  --bar:    #8a8078;
+  --pos:    #78b874;
+  --neg:    #c98080;
+  --hover:  rgba(255,255,255,0.05);
+  --badge:  #1e1c18;
+  --tab-bg: #1a1816;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
 body {
-  font-family: "Source Serif 4", "Noto Serif", Georgia, "Times New Roman", serif;
-  color: #000; background-color: #fff; max-width: 38em; margin: 0 auto;
-  padding: 0 0.5em 2em 0.5em; line-height: 1.4;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  max-width: 700px;
+  margin: 0 auto;
+  padding-block: 0.5em 3em;
+  padding-left:  max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  line-height: 1.5;
+  font-size: 15px;
 }
 p { margin: 0; text-indent: 1.2em; text-align: justify; }
 p.first, p.noindent { text-indent: 0; }
-.folio-top { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.12em; text-align: center; margin: 0 0 0.4em 0; }
-.nameplate { font-size: 2.4em; font-weight: normal; text-transform: uppercase; letter-spacing: 0.04em;
-  text-align: center; line-height: 1.1; margin: 0; padding: 0.25em 0 0.2em 0;
-  border-top: 5px double #000; border-bottom: 2px solid #000; }
-.folio { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.1em; text-align: center;
-  padding: 0.35em 0; border-bottom: 5px double #000; margin: 0 0 0.6em 0; }
-.motto { font-style: italic; text-align: center; text-indent: 0; margin: 0 0 1.5em 0; }
-.label { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.15em; text-align: center;
-  border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 0.2em 0; margin: 1.4em 0 0.7em 0; }
-.colophon { font-size: 0.8em; text-align: center; text-indent: 0; border-top: 5px double #000;
-  padding: 0.5em 0 0 0; margin: 2em 0 0 0; }
+a { color: var(--ink); }
+
+/* ── Nameplate ── */
+.folio-top { font-size:.68em; text-transform:uppercase; letter-spacing:.2em; text-align:center; color:var(--dim); margin:1.4em 0 .4em; }
+.nameplate { font-family:"IM Fell English",Georgia,serif; font-size:3em; font-weight:400; text-transform:uppercase; letter-spacing:.04em; text-align:center; line-height:1; margin:0; padding:.2em 0; border-top:5px double var(--rule); border-bottom:2px solid var(--rule); text-wrap:balance; }
+.folio { font-size:.68em; text-transform:uppercase; letter-spacing:.14em; text-align:center; padding:.3em 0; border-bottom:5px double var(--rule); margin:0 0 .5em; color:var(--dim); }
+.motto { font-style:italic; text-align:center; text-indent:0; color:var(--dim); font-size:.92em; margin:0 0 1.2em; }
+
+/* ── Section label bar ── */
+.label { font-size:.68em; font-weight:400; text-transform:uppercase; letter-spacing:.2em; text-align:center; border-top:2px solid var(--rule); border-bottom:2px solid var(--rule); padding:.22em 0; margin:1.4em 0 .7em; }
+
+/* ── Front-page ranking table ── */
+.table-scroll { overflow-x:auto; margin:0 0 .6em; }
+table.ranking { width:100%; min-width:560px; border-collapse:collapse; font-size:.83em; border-top:2px solid var(--rule); border-bottom:2px solid var(--rule); }
+table.ranking thead th { font-weight:400; font-style:italic; text-align:left; border-bottom:2px solid var(--rule); padding:.3em .5em; color:var(--dim); white-space:nowrap; }
+table.ranking thead th.r, table.ranking td.r { text-align:right; }
+table.ranking thead th.c, table.ranking td.c { text-align:center; }
+table.ranking tbody tr { cursor:pointer; transition:background .15s; }
+table.ranking tbody tr:hover { background:var(--hover); }
+table.ranking tbody tr.featured { background:var(--badge); }
+table.ranking tbody tr.featured:hover { background:var(--hover); }
+table.ranking td { padding:.3em .5em; border-bottom:1px solid var(--faint); vertical-align:middle; }
+table.ranking tbody tr:last-child td { border-bottom:none; }
+.rank-num { font-size:1.1em; font-weight:700; font-variant-numeric:tabular-nums; text-align:center; display:block; }
+.ticker-cell { font-family:"Courier New",monospace; font-weight:700; letter-spacing:.04em; }
+.name-cell { font-size:.88em; color:var(--dim); white-space:nowrap; }
+.sector-cell { font-size:.82em; color:var(--dim); white-space:nowrap; }
+.perf-pos { color:var(--pos); font-weight:600; font-variant-numeric:tabular-nums; }
+.perf-neg { color:var(--neg); font-weight:600; font-variant-numeric:tabular-nums; }
+.perf-flat { color:var(--dim); font-variant-numeric:tabular-nums; }
+.score-cell { font-weight:700; font-size:1.05em; font-variant-numeric:tabular-nums; text-align:center; }
+.mos-cell { text-align:right; font-weight:600; font-variant-numeric:tabular-nums; }
+.pe-cell { text-align:right; font-variant-numeric:tabular-nums; }
+.sig-cell { white-space:nowrap; }
+.sig-pill { font-size:.72em; font-family:"Courier New",monospace; border:1px solid currentColor; padding:.05em .35em; margin-right:.2em; display:inline-block; line-height:1.5; }
+.featured-arrow { display:inline-block; font-size:.7em; color:var(--dim); margin-left:.4em; vertical-align:middle; }
+
+/* ── Section separator ── */
+.page-sep { border:none; border-top:5px double var(--rule); margin:3em 0 0; }
+.page-sep-label { text-align:center; font-size:.62em; text-transform:uppercase; letter-spacing:.25em; color:var(--mid); margin:.4em 0 1.4em; }
+
+/* ── Stock section header ── */
+.stock-section { margin-top:0; padding-top:.2em; }
+.stock-meta { font-size:.67em; text-transform:uppercase; letter-spacing:.12em; color:var(--dim); border-top:2px solid var(--rule); padding-top:.35em; margin:0 0 .3em; display:flex; flex-wrap:wrap; align-items:baseline; gap:0 .8em; }
+.stock-header-row { display:flex; align-items:flex-start; justify-content:space-between; gap:1em; margin-bottom:0; }
+.stock-header-row h2.headline { flex:1; min-width:0; }
+.score-badge { flex-shrink:0; text-align:center; border:2px solid var(--rule); padding:.3em .65em .25em; line-height:1.1; background:var(--badge); }
+.score-badge .score-num { font-size:1.8em; font-weight:700; display:block; line-height:1; }
+.score-badge .score-cap { font-size:.58em; text-transform:uppercase; letter-spacing:.14em; color:var(--dim); }
+h2.headline { font-size:1.8em; font-weight:700; line-height:1.1; margin:0; text-wrap:balance; }
+.ticker-tag { font-family:"Courier New",Courier,monospace; font-size:.5em; letter-spacing:.08em; background:var(--ink); color:var(--paper); padding:.18em .55em; vertical-align:middle; position:relative; top:-.2em; font-weight:400; }
+.sig-badge { font-size:.68em; font-family:"Courier New",monospace; border:1px solid var(--rule); padding:.08em .4em; }
+
+/* ── Tabs ── */
+.stock-tabs { display:flex; overflow-x:auto; border-bottom:2px solid var(--rule); margin:.9em 0 0; gap:0; }
+.tab-btn { background:none; border:none; border-bottom:3px solid transparent; margin-bottom:-2px; padding:.45em 1.1em; font-family:inherit; font-size:.68em; text-transform:uppercase; letter-spacing:.14em; cursor:pointer; color:var(--dim); white-space:nowrap; transition:color .15s, border-color .15s; }
+.tab-btn.active { color:var(--ink); border-bottom-color:var(--ink); font-weight:700; }
+.tab-btn:hover:not(.active) { color:var(--ink); }
+.tab-panel { display:none; padding-top:.9em; }
+.tab-panel.active { display:block; }
+
+/* ── Charts ── */
+.charts-row { display:grid; grid-template-columns:1fr; gap:.9em; margin:.6em 0 .9em; }
+.chart-box { border:1px solid var(--faint); border-top:2px solid var(--rule); padding:.7em .65em .4em; min-width:0; }
+.chart-label { font-size:.63em; text-transform:uppercase; letter-spacing:.13em; color:var(--dim); margin:0 0 .55em; font-weight:400; }
+canvas { display:block; max-width:100%; }
+
+/* ── Metrics table ── */
+table.metrics { width:100%; border-collapse:collapse; font-size:.83em; margin:.5em 0 .4em; border-top:2px solid var(--rule); border-bottom:2px solid var(--rule); }
+table.metrics th { font-weight:400; font-style:italic; text-align:left; border-bottom:2px solid var(--rule); padding:.28em .55em; color:var(--dim); }
+table.metrics td { padding:.23em .55em; border-bottom:1px solid var(--faint); vertical-align:top; line-height:1.4; }
+table.metrics tr:last-child td { border-bottom:none; }
+table.metrics tr.metric-hl td { background:var(--badge); }
+table.metrics td.v { text-align:right; font-weight:600; font-variant-numeric:tabular-nums; }
+table.metrics td.kicker { font-size:.8em; color:var(--dim); font-style:italic; }
+.mos-bar { height:3px; background:var(--faint); border-radius:1px; overflow:hidden; margin-top:3px; }
+.mos-fill { height:100%; background:var(--ink); border-radius:1px; }
+
+/* ── Peer comparison table ── */
+table.peers { width:100%; border-collapse:collapse; font-size:.8em; margin:1em 0; border-top:2px solid var(--rule); border-bottom:2px solid var(--rule); }
+table.peers th { padding:.3em .5em; border-bottom:2px solid var(--rule); font-weight:400; font-style:italic; color:var(--dim); }
+table.peers th:first-child { text-align:left; }
+table.peers th:not(:first-child) { text-align:center; }
+table.peers td { padding:.25em .5em; border-bottom:1px solid var(--faint); }
+table.peers td:first-child { color:var(--dim); font-size:.9em; }
+table.peers td:not(:first-child) { text-align:center; font-variant-numeric:tabular-nums; }
+table.peers tr:last-child td { border-bottom:none; }
+table.peers .jnj-col { font-weight:700; background:var(--badge); }
+table.peers .best { font-weight:700; }
+
+/* ── Editorial text ── */
+h3.sub { font-size:.95em; font-weight:700; font-style:italic; margin:1.1em 0 .3em; }
+ul.checks { margin:.5em 0; padding:0 0 0 1.4em; list-style:none; }
+ul.checks li { margin:0 0 .6em; text-align:justify; line-height:1.6; position:relative; }
+ul.checks li::before { content:"◆"; position:absolute; left:-1.3em; font-size:.5em; top:.55em; color:var(--dim); }
+.note-small { font-size:.75em; font-style:italic; color:var(--dim); text-indent:0; margin:.4em 0; }
+.src { font-size:.72em; font-style:italic; color:var(--mid); text-indent:0; margin:1.3em 0 0; }
+.end { text-align:center; text-indent:0; margin:1.8em 0 0; font-size:.85em; letter-spacing:.45em; color:var(--mid); }
+.back-link { font-size:.72em; text-transform:uppercase; letter-spacing:.12em; color:var(--dim); text-decoration:none; border-bottom:1px solid var(--faint); display:inline-block; margin-top:.7em; }
+.back-link:hover { color:var(--ink); border-color:var(--ink); }
+.illus-banner { font-size:.63em; text-align:center; text-indent:0; color:var(--mid); letter-spacing:.1em; text-transform:uppercase; margin:0 0 .7em; border:1px solid var(--faint); padding:.22em 0; }
+.colophon { font-size:.68em; text-align:center; text-indent:0; border-top:5px double var(--rule); padding:.5em 0 0; margin:2.5em 0 0; color:var(--dim); letter-spacing:.06em; line-height:1.9; }
+.stub-block { margin-top:2.5em; padding-top:.1em; }
+.stub-note { font-style:italic; color:var(--dim); text-indent:0; font-size:.9em; margin:.4em 0 .8em; }
 </style>
-</head>
-<body>
-<p class="folio-top">Est. 2026 &#183; Buffett / Gross Value Philosophy</p>
-<h1 class="nameplate">Value Dispatch</h1>
-<p class="folio">Initialising &#183; First edition pending</p>
+
+<!-- ══════════════  PAGE 1 — FRONT TABLE  ══════════════ -->
+<p class="folio-top">Est. 2026 · Buffett / Gross Value Philosophy · Mock-up Edition</p>
+<h1 class="nameplate" id="top">Value Dispatch</h1>
+<p class="folio">Mock-up · No. 1 · Friday, 24 October 2026 · Top-10 Value Picks</p>
 <p class="motto">Undervalued. Dropped. Signalled.</p>
-<p class="label">Status</p>
-<p class="first">The first Value Dispatch edition will be published by the scheduled daily agent. Check back tomorrow morning.</p>
-<p class="colophon">Value Dispatch &#183; Not investment advice</p>
-</body>
-</html>
+
+<p class="label">Top 10 Picks — This Edition</p>
+<p class="illus-banner">All figures illustrative &nbsp;·&nbsp; Click any row to open that stock's full analysis</p>
+
+<div class="table-scroll">
+<table class="ranking" id="picks-table">
+  <thead>
+    <tr>
+      <th class="c">#</th>
+      <th>Ticker · Name</th>
+      <th>Sector</th>
+      <th class="r">YTD</th>
+      <th class="r">MTD</th>
+      <th class="r">P/E</th>
+      <th class="c">Score</th>
+      <th class="r">MoS</th>
+      <th class="c">Sig</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="pick-row" data-target="s1"><td class="c"><span class="rank-num">1</span></td><td><span class="ticker-cell">MSFT</span><br><span class="name-cell">Microsoft Corp</span></td><td class="sector-cell">Technology</td><td class="r perf-pos">+8.2%</td><td class="r perf-pos">+2.1%</td><td class="pe-cell">27.8×</td><td class="c score-cell">84</td><td class="r mos-cell">28%</td><td class="c sig-cell"><span class="sig-pill">A</span><span class="sig-pill">I</span></td></tr>
+    <tr class="pick-row featured" data-target="s2"><td class="c"><span class="rank-num">2</span></td><td><span class="ticker-cell">JNJ</span><span class="featured-arrow">→</span><br><span class="name-cell">Johnson &amp; Johnson</span></td><td class="sector-cell">Health Care</td><td class="r perf-neg">−11.3%</td><td class="r perf-neg">−3.2%</td><td class="pe-cell">15.2×</td><td class="c score-cell">79</td><td class="r mos-cell">22%</td><td class="c sig-cell"><span class="sig-pill">A</span><span class="sig-pill">I</span></td></tr>
+    <tr class="pick-row" data-target="s3"><td class="c"><span class="rank-num">3</span></td><td><span class="ticker-cell">CVX</span><br><span class="name-cell">Chevron Corp</span></td><td class="sector-cell">Energy</td><td class="r perf-neg">−14.7%</td><td class="r perf-neg">−1.8%</td><td class="pe-cell">12.3×</td><td class="c score-cell">76</td><td class="r mos-cell">31%</td><td class="c sig-cell"><span class="sig-pill">A</span></td></tr>
+    <tr class="pick-row" data-target="s4"><td class="c"><span class="rank-num">4</span></td><td><span class="ticker-cell">LMT</span><br><span class="name-cell">Lockheed Martin</span></td><td class="sector-cell">Industrials</td><td class="r perf-pos">+3.1%</td><td class="r perf-flat">+0.4%</td><td class="pe-cell">16.1×</td><td class="c score-cell">74</td><td class="r mos-cell">18%</td><td class="c sig-cell"><span class="sig-pill">A</span><span class="sig-pill">I</span></td></tr>
+    <tr class="pick-row" data-target="s5"><td class="c"><span class="rank-num">5</span></td><td><span class="ticker-cell">BAC</span><br><span class="name-cell">Bank of America</span></td><td class="sector-cell">Financials</td><td class="r perf-neg">−8.9%</td><td class="r perf-neg">−2.4%</td><td class="pe-cell">13.8×</td><td class="c score-cell">72</td><td class="r mos-cell">24%</td><td class="c sig-cell"><span class="sig-pill">I</span></td></tr>
+    <tr class="pick-row" data-target="s6"><td class="c"><span class="rank-num">6</span></td><td><span class="ticker-cell">DG</span><br><span class="name-cell">Dollar General</span></td><td class="sector-cell">Cons. Staples</td><td class="r perf-neg">−33.4%</td><td class="r perf-neg">−5.1%</td><td class="pe-cell">14.2×</td><td class="c score-cell">70</td><td class="r mos-cell">37%</td><td class="c sig-cell"><span class="sig-pill">A</span><span class="sig-pill">I</span><span class="sig-pill">C</span></td></tr>
+    <tr class="pick-row" data-target="s7"><td class="c"><span class="rank-num">7</span></td><td><span class="ticker-cell">NOVO B</span><br><span class="name-cell">Novo Nordisk A/S</span></td><td class="sector-cell">Health Care</td><td class="r perf-neg">−19.2%</td><td class="r perf-neg">−4.3%</td><td class="pe-cell">21.4×</td><td class="c score-cell">68</td><td class="r mos-cell">26%</td><td class="c sig-cell"><span class="sig-pill">A</span></td></tr>
+    <tr class="pick-row" data-target="s8"><td class="c"><span class="rank-num">8</span></td><td><span class="ticker-cell">WBD</span><br><span class="name-cell">Warner Bros. Discovery</span></td><td class="sector-cell">Comm. Svcs</td><td class="r perf-neg">−28.1%</td><td class="r perf-neg">−6.7%</td><td class="pe-cell">11.5×</td><td class="c score-cell">65</td><td class="r mos-cell">29%</td><td class="c sig-cell"><span class="sig-pill">A</span></td></tr>
+    <tr class="pick-row" data-target="s9"><td class="c"><span class="rank-num">9</span></td><td><span class="ticker-cell">AXA</span><br><span class="name-cell">AXA Group <small style="font-weight:400;opacity:.65">EPA</small></span></td><td class="sector-cell">Financials</td><td class="r perf-pos">+2.4%</td><td class="r perf-flat">+0.8%</td><td class="pe-cell">9.2×</td><td class="c score-cell">63</td><td class="r mos-cell">32%</td><td class="c sig-cell"><span class="sig-pill">A</span><span class="sig-pill">I</span></td></tr>
+    <tr class="pick-row" data-target="s10"><td class="c"><span class="rank-num">10</span></td><td><span class="ticker-cell">BABA</span><br><span class="name-cell">Alibaba Group</span></td><td class="sector-cell">Technology</td><td class="r perf-neg">−22.8%</td><td class="r perf-neg">−8.1%</td><td class="pe-cell">9.8×</td><td class="c score-cell">61</td><td class="r mos-cell">41%</td><td class="c sig-cell"><span class="sig-pill">A</span></td></tr>
+  </tbody>
+</table>
+</div>
+<p class="note-small">Score 0–100: Valuation 35%, Quality/moat 30%, Balance sheet 15%, Signals 15%, Technical dip 5%. MoS = (target − price) ÷ target. Signals: A = analyst Buy ≥ 55%, I = insider open-market buy (90d), C = Congress purchase (90d). Max 3 per GICS sector. All figures illustrative.</p>
+
+
+<!-- ══════════════  JNJ FULL DETAIL  ══════════════ -->
+<hr class="page-sep" id="s2">
+<p class="page-sep-label">— Pick 2 of 10: Full Detail —</p>
+
+<div class="stock-section">
+  <div class="stock-meta">
+    <span>Health Care · Pharmaceuticals</span>
+    <span>Pick 2 of 10</span>
+    <span class="sig-badge">A</span>
+    <span class="sig-badge">I</span>
+  </div>
+  <div class="stock-header-row">
+    <h2 class="headline">Johnson &amp; Johnson <span class="ticker-tag">JNJ · NYSE · US</span></h2>
+    <div class="score-badge">
+      <span class="score-num">79</span>
+      <span class="score-cap">/ 100</span>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <nav class="stock-tabs">
+    <button class="tab-btn active" data-tab="s2-charts">Charts &amp; Metrics</button>
+    <button class="tab-btn" data-tab="s2-profile">Company Profile</button>
+    <button class="tab-btn" data-tab="s2-thesis">Thesis &amp; Risks</button>
+  </nav>
+
+  <!-- ── Tab 1: Charts + Metrics ── -->
+  <div id="s2-charts" class="tab-panel active">
+    <p class="illus-banner" style="margin-top:.8em">Illustrative data — verify before acting</p>
+    <div class="charts-row">
+      <div class="chart-box">
+        <p class="chart-label">Price vs 200-Day Moving Average · 24 months</p>
+        <canvas id="priceChart" height="180"></canvas>
+      </div>
+      <div class="chart-box">
+        <p class="chart-label">FCF / Share (bars, L) · P/E ratio (line, R)</p>
+        <canvas id="fcfChart" height="180"></canvas>
+      </div>
+    </div>
+    <p class="label">Key Metrics</p>
+    <table class="metrics">
+      <tr><th>Metric</th><th>Value</th><th>Metric</th><th>Value</th></tr>
+      <tr class="metric-hl"><td>Price (23 Oct 2026)</td><td class="v">$155.30</td><td>Analyst consensus target</td><td class="v">$199.50</td></tr>
+      <tr class="metric-hl">
+        <td>Margin of safety</td>
+        <td class="v">22.2%<div class="mos-bar"><div class="mos-fill" style="width:22.2%"></div></div></td>
+        <td>% vs 200-day MA</td><td class="v">−1.7%</td>
+      </tr>
+      <tr><td>P/E (TTM)</td><td class="v">15.2×</td><td>5-yr median P/E</td><td class="v kicker">17.8×</td></tr>
+      <tr><td>FCF yield</td><td class="v">6.4%</td><td>EV / EBITDA</td><td class="v">11.8×</td></tr>
+      <tr><td>ROIC (5-yr avg)</td><td class="v">18.3%</td><td>Net debt / EBITDA</td><td class="v">0.8×</td></tr>
+      <tr><td>Dividend yield</td><td class="v">3.2%</td><td>Piotroski F-score</td><td class="v">7 / 9</td></tr>
+      <tr><td>52-week high</td><td class="v">$172.10</td><td>Signals</td><td class="v">A · I</td></tr>
+    </table>
+    <p class="note-small">MoS = (analyst target − price) ÷ target. A = 18 Buy / 6 Hold / 1 Sell. I = insider open-market buy within 90 days. FCF yield = FCF/share ÷ price. Figures illustrative.</p>
+  </div>
+
+  <!-- ── Tab 2: Company Profile + Edge ── -->
+  <div id="s2-profile" class="tab-panel">
+    <p class="label" style="margin-top:.8em">What It Does</p>
+    <p class="first">Following the 2023 spin-off of its consumer segment as Kenvue, Johnson &amp; Johnson operates two pure-play divisions: Innovative Medicine (~55% of revenues) and MedTech. Innovative Medicine is led by Darzalex (multiple myeloma), Tremfya (psoriatic disease), Spravato (treatment-resistant depression), and Carvykti (CAR-T cell therapy). MedTech covers cardiovascular devices via the Shockwave acquisition (&gt;90% gross margins), orthopaedics through DePuy Synthes, and a surgical robotics platform (Ottava, in late-stage development). The company has raised its dividend for 61 consecutive years — one of 35 S&amp;P 500 Dividend Kings.</p>
+
+    <p class="label">Edge vs. Peers</p>
+    <ul class="checks">
+      <li><b>No single-franchise cliff risk.</b> Pfizer faces a post-COVID revenue wall; AbbVie's Humira succession creates execution risk; Merck's pipeline is Keytruda-concentrated, with its own biosimilar clock starting post-2028. J&amp;J's top-line is diversified across four therapeutic pillars — no single product exceeds ~22% of group revenue — meaning a setback in one area does not threaten the thesis.</li>
+      <li><b>Carvykti supply moat.</b> CAR-T therapy requires bespoke cell manufacturing; competitors Bristol Myers Squibb and Pfizer have suffered repeated production failures. J&amp;J now leads on delivered-dose volumes in relapsed/refractory myeloma — a structural supply advantage in a high-ASP market where there is no oral substitute and ~24,000 eligible US patients annually.</li>
+      <li><b>Two-division earnings resilience.</b> The combination of IP-protected pharma margins and MedTech's recurring device-replacement cycles (patients returning for implant replacements on predictable timelines) produces structurally lower earnings volatility than any pure-play pharma peer. In the last three downturns, J&amp;J's EPS declined less than half as much as PFE, ABBV, or MRK.</li>
+      <li><b>Capital-allocation credibility.</b> The Kenvue spin-off unlocked $13.2bn for shareholders and sharpened R&amp;D focus. Sixty-one consecutive years of dividend growth — maintained through nine recessions — signals a management culture that treats shareholder returns as a contract. No peer holds the same streak.</li>
+    </ul>
+
+    <p class="label">Peer Snapshot</p>
+    <div class="table-scroll">
+    <table class="peers">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="jnj-col">JNJ</th>
+          <th>PFE</th>
+          <th>ABBV</th>
+          <th>MRK</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>P/E (TTM)</td><td class="jnj-col">15.2×</td><td>11.8×</td><td>14.2×</td><td>16.3×</td></tr>
+        <tr><td>ROIC (5yr)</td><td class="jnj-col best">18.3%</td><td>9.1%</td><td>15.2%</td><td>24.4%</td></tr>
+        <tr><td>FCF yield</td><td class="jnj-col best">6.4%</td><td>5.8%</td><td>5.2%</td><td>4.1%</td></tr>
+        <tr><td>Net debt/EBITDA</td><td class="jnj-col best">0.8×</td><td>1.4×</td><td>3.8×</td><td>1.1×</td></tr>
+        <tr><td>Div. streak (yrs)</td><td class="jnj-col best">61</td><td>15</td><td>10</td><td>14</td></tr>
+        <tr><td>Top product % rev.</td><td class="jnj-col best">~22%</td><td>~28%</td><td>~43%</td><td>~46%</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="note-small">Illustrative peer data. ROIC advantage vs PFE (+9.2pp) and low leverage vs ABBV (3.0× lower net debt/EBITDA) are structural, not cyclical. Top product concentration: Darzalex (JNJ), Paxlovid (PFE), Skyrizi (ABBV), Keytruda (MRK).</p>
+  </div>
+
+  <!-- ── Tab 3: Thesis + Risks ── -->
+  <div id="s2-thesis" class="tab-panel">
+    <p class="label" style="margin-top:.8em">Key Catalysts</p>
+    <ul class="checks">
+      <li><b>24 Oct 2026 — Q3 beat &amp; raised guidance.</b> Adjusted EPS $2.62 vs consensus $2.52 (+4.2%). Full-year EPS guidance raised to $10.00–10.10. Darzalex at $12bn annualised run rate. Management: Stelara biosimilar erosion "tracking to the lower end of guidance," suggesting the market has over-discounted that headwind. <i>(Company press release, 24 Oct 2026)</i></li>
+      <li><b>10 Oct 2026 — CFO open-market purchase (Form 4).</b> SVP &amp; Group CFO James Clark purchased 5,000 shares at $153.40 — a $767,000 open-market commitment. No option-exercise motive at this seniority; Clark has full visibility to the talc litigation reserve and bought anyway. <i>(SEC EDGAR Form 4, 10 Oct 2026)</i></li>
+    </ul>
+
+    <p class="label">Why It Fits a Value Lens</p>
+    <ul class="checks">
+      <li><b>Moat / quality:</b> ROIC of 18.3% (5-yr avg) versus sector median ~12%. Darzalex–Tremfya–Carvykti IP protected through at least 2029–2031. Shockwave cardiovascular portfolio adds high-barrier recurring device revenue with &gt;90% gross margins.</li>
+      <li><b>Price vs value:</b> At 15.2× TTM P/E versus its own 5-year median of 17.8×, and an FCF yield of 6.4% versus the sector's 4.0%, J&amp;J trades at a 15% discount to its historical valuation. The 22% MoS to analyst consensus ($199.50) is the widest since the COVID sell-off in 2020.</li>
+    </ul>
+
+    <p class="label">Key Risks</p>
+    <ul class="checks">
+      <li><b>Talc litigation overhang.</b> ~60,000 suits pending after federal appeals court rejected J&amp;J's third bankruptcy pre-pack (early 2026). $8bn reserved but final exposure uncertain. An adverse bellwether verdict could trigger step-change in settlement expectations — this is the primary reason the stock trades at a discount and the most credible value-trap scenario.</li>
+      <li><b>Stelara biosimilar acceleration.</b> If biosimilars take &gt;25% share by end-2026 — plausible given Organon and Amgen pricing — FY2027 revenues could miss consensus by $1.5–2bn. The stock has partially re-rated since initial biosimilar entry; a second down-leg demands patience beyond a 12-month horizon.</li>
+      <li><b>Ottava delay risk.</b> Surgical robot FDA submission slipped to late 2027. Any further slip removes the growth optionality some sell-side models embed in their $199+ price targets, compressing the intrinsic-value ceiling underpinning the MoS estimate.</li>
+    </ul>
+
+    <p class="src">Sources (illustrative): J&amp;J Q3 2026 Earnings Release (24 Oct 2026); SEC EDGAR Form 4, Clark (10 Oct 2026); WSJ, "J&amp;J Talc Bankruptcy Rejected" (Mar 2026); Bloomberg, "Biosimilar Competition Heats Up" (Sep 2026). All events and figures are illustrative mock-up data.</p>
+    <p class="end">— ◇ —</p>
+  </div>
+
+  <p class="noindent"><a href="#top" class="back-link">↑ Back to picks table</a></p>
+</div><!-- /stock-section -->
+
+
+<!-- ══════════════  STUBS: PICKS 1, 3–10  ══════════════ -->
+<div class="stub-block" id="s1"><hr class="page-sep"><div class="stock-meta"><span>Technology</span><span>Pick 1</span><span class="sig-badge">A</span><span class="sig-badge">I</span></div><h2 class="headline">Microsoft Corp <span class="ticker-tag">MSFT · NASDAQ · US</span></h2><p class="label">Detail</p><p class="stub-note first">Full three-page analysis available in the live daily edition. This mock-up shows JNJ (Pick 2) in full.</p><p class="noindent"><a href="#top" class="back-link">↑ Back to picks table</a></p></div>
+<div class="stub-block" id="s3"><hr class="page-sep"><div class="stock-meta"><span>Energy</span><span>Pick 3</span><span class="sig-badge">A</span></div><h2 class="headline">Chevron Corp <span class="ticker-tag">CVX · NYSE · US</span></h2><p class="label">Detail</p><p class="stub-note first">Full three-page analysis available in the live daily edition.</p><p class="noindent"><a href="#top" class="back-link">↑ Back to picks table</a></p></div>
+<div class="stub-block" id="s4"><hr class="page-sep"><div class="stock-meta"><span>Industrials</span><span>Pick 4</span><span class="sig-badge">A</span><span class="sig-badge">I</span></div><h2 class="headline">Lockheed Martin Corp <span class="ticker-tag">LMT · NYSE · US</span></h2><p class="label">Detail</p><p class="stub-note first">Full three-page analysis available in the live daily edition.</p><p class="noindent"><a href="#top" class="back-link">↑ Back to picks table</a></p></div>
+<div class="stub-block" id="s5"><hr class="page-sep"><div class="stock-meta"><span>Financials</span><span>Pick 5</span><span class="sig-badge">I</span></div><h2 class="headline">Bank of America Corp <span class="ticker-tag">BAC · NYSE · US</span></h2><p class="label">Detail</p><p class="stub-note first">Full three-page analysis available in the live daily edition.</p><p class="noindent"><a href="#top" class="back-link">↑ Back to picks table</a></p></div>
+<div class="stub-block" id="s6"><hr class="page-sep"><div class="stock-meta"><span>Consumer Staples</span><span>Pick 6</span><span class="sig-badge">A</span><span class="sig-badge">I</span><span class="sig-badge">C</span></div><h2 class="headline">Dollar General Corp <span class="ticker-tag">DG · NYSE · US</span></h2><p class="label">Detail</p><p class="stub-note first">Full three-page analysis available in the live daily edition.</p><p class="noindent"><a href="#top" class="back-link">↑ Back to picks table</a></p></div>
+<div class="stub-block" id="s7"><hr class="page-sep"><div class="stock-meta"><span>Health Care · European</span><span>Pick 7</span><span class="sig-badge">A</span></div><h2 class="headline">Novo Nordisk A/S <span class="ticker-tag">NOVO B · CPH · DK</span></h2><p class="label">Detail</p><p class="stub-note first">Full three-page analysis available in the live daily edition.</p><p class="noindent"><a href="#top" class="back-link">↑ Back to picks table</a></p></div>
+<div class="stub-block" id="s8"><hr class="page-sep"><div class="stock-meta"><span>Communication Services</span><span>Pick 8</span><span class="sig-badge">A</span></div><h2 class="headline">Warner Bros. Discovery <span class="ticker-tag">WBD · NASDAQ · US</span></h2><p class="label">Detail</p><p class="stub-note first">Full three-page analysis available in the live daily edition.</p><p class="noindent"><a href="#top" class="back-link">↑ Back to picks table</a></p></div>
+<div class="stub-block" id="s9"><hr class="page-sep"><div class="stock-meta"><span>Financials · European</span><span>Pick 9</span><span class="sig-badge">A</span><span class="sig-badge">I</span></div><h2 class="headline">AXA Group <span class="ticker-tag">AXA · EPA · FR</span></h2><p class="label">Detail</p><p class="stub-note first">Full three-page analysis available in the live daily edition.</p><p class="noindent"><a href="#top" class="back-link">↑ Back to picks table</a></p></div>
+<div class="stub-block" id="s10"><hr class="page-sep"><div class="stock-meta"><span>Technology</span><span>Pick 10</span><span class="sig-badge">A</span></div><h2 class="headline">Alibaba Group Holding <span class="ticker-tag">BABA · NYSE · CN</span></h2><p class="label">Detail</p><p class="stub-note first">Full three-page analysis available in the live daily edition.</p><p class="noindent"><a href="#top" class="back-link">↑ Back to picks table</a></p></div>
+
+<p class="colophon">Value Dispatch · Mock-up Edition · Not investment advice · All figures illustrative and not drawn from live data sources<br>Verify independently before acting · The author may hold positions · Insider and Congressional disclosures may lag up to 45 days</p>
+
+
+<!-- ══════════════  SCRIPT  ══════════════ -->
+<script>
+(function () {
+  // ── Row navigation ──
+  document.querySelectorAll('.pick-row').forEach(function (row) {
+    row.addEventListener('click', function () {
+      var target = document.getElementById(row.dataset.target);
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.style.transition = 'background 0s';
+      target.style.background = 'var(--badge)';
+      setTimeout(function () {
+        target.style.transition = 'background 1.4s ease';
+        target.style.background = '';
+      }, 60);
+    });
+  });
+
+  // ── Tab switching ──
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var nav = btn.parentNode;
+      var section = nav.parentNode;
+      // deactivate all tabs and panels in this section
+      nav.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      section.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      // activate clicked tab + its panel
+      btn.classList.add('active');
+      var panel = document.getElementById(btn.dataset.tab);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  // ── Charts ──
+  var cs = getComputedStyle(document.documentElement);
+  var ink   = cs.getPropertyValue('--ink').trim()   || '#111';
+  var dim   = cs.getPropertyValue('--dim').trim()   || '#555';
+  var mid   = cs.getPropertyValue('--mid').trim()   || '#999';
+  var faint = cs.getPropertyValue('--faint').trim() || '#e0dcd4';
+  var bar   = cs.getPropertyValue('--bar').trim()   || '#666';
+  var paper = cs.getPropertyValue('--paper').trim() || '#f8f6f1';
+
+  Chart.defaults.font.family = "'Source Serif 4', Georgia, serif";
+  Chart.defaults.font.size   = 9;
+  Chart.defaults.color       = dim;
+
+  // Price vs 200DMA
+  new Chart(document.getElementById('priceChart'), {
+    type: 'line',
+    data: {
+      labels: ["Oct'24","Nov","Dec","Jan'25","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan'26","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct'26"],
+      datasets: [
+        { label:'JNJ Price', data:[164,168,171,169,165,162,158,160,163,165,167,164,161,158,156,158,160,157,153,155,158,156,154,152,155], borderColor:ink, borderWidth:1.8, pointRadius:0, pointHoverRadius:3, tension:.25, fill:false },
+        { label:'200DMA',    data:[163,164,165,166,167,167,167,167,166,166,166,165,164,163,163,162,162,161,160,160,159,159,159,158,158], borderColor:mid, borderDash:[4,3], borderWidth:1.3, pointRadius:0, tension:.1, fill:false }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      scales:{
+        x:{ grid:{display:false}, border:{color:faint}, ticks:{maxTicksLimit:5, maxRotation:0, color:dim, font:{size:8}} },
+        y:{ min:148, max:176, grid:{color:faint, lineWidth:.5}, border:{color:faint}, ticks:{callback:function(v){return '$'+v;}, maxTicksLimit:4, color:dim, font:{size:8}} }
+      },
+      plugins:{
+        legend:{ position:'bottom', labels:{boxWidth:18,boxHeight:1,padding:7,font:{size:8},color:dim} },
+        tooltip:{ callbacks:{ label:function(c){return c.dataset.label+': $'+c.parsed.y;} } }
+      }
+    }
+  });
+
+  // FCF/Share + P/E
+  var fcfData=[8.1,8.7,10.4,10.8,11.5,11.9,10.2,10.9,11.2,11.6];
+  var peData=[16.2,17.8,18.5,14.1,19.3,17.2,16.5,15.8,15.4,15.2];
+  new Chart(document.getElementById('fcfChart'), {
+    type:'bar',
+    data:{
+      labels:["'17","'18","'19","'20","'21","'22","'23","'24","'25E","'26E"],
+      datasets:[
+        { type:'bar',  label:'FCF/Share ($)', data:fcfData, backgroundColor:fcfData.map(function(_,i){return bar+(i>=8?'88':'cc');}), borderWidth:0, yAxisID:'yFCF', order:2 },
+        { type:'line', label:'P/E ratio',     data:peData,  borderColor:ink, borderWidth:2, pointRadius:4, pointHoverRadius:6, pointBackgroundColor:ink, pointBorderColor:paper, pointBorderWidth:2, tension:.2, fill:false, yAxisID:'yPE', order:1 }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      scales:{
+        x:{ grid:{display:false}, border:{color:faint}, ticks:{color:dim,font:{size:8},maxRotation:0} },
+        yFCF:{ position:'left', min:6, max:14, grid:{color:faint,lineWidth:.5}, border:{color:faint}, ticks:{callback:function(v){return '$'+v;},maxTicksLimit:5,color:dim,font:{size:8}} },
+        yPE:{ position:'right', min:10, max:24, grid:{display:false}, border:{color:faint}, ticks:{callback:function(v){return v+'×';},maxTicksLimit:4,color:mid,font:{size:8}} }
+      },
+      plugins:{
+        legend:{ position:'bottom', labels:{boxWidth:14,boxHeight:8,padding:7,font:{size:8},color:dim} },
+        tooltip:{ callbacks:{ label:function(c){ return c.datasetIndex===0?'FCF/sh: $'+c.parsed.y.toFixed(1):'P/E: '+c.parsed.y+'×'; } } }
+      }
+    }
+  });
+})();
+</script>

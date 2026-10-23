@@ -1,7 +1,7 @@
 --[[
 Gio's Dispatch for KOReader — two channels:
   Financial Dispatch  <base>/latest.html        (daily market concepts + drill)
-  Value Dispatch      <base>/stock-latest.html  (daily top-10 value stock picks)
+  Stock Dispatch      <base>/stock-latest.html  (daily top-10 value stock picks)
 
 Each channel keeps its own dated copies in koreader/giodispatch/.
 With no connection it opens the newest copy already on the device.
@@ -29,7 +29,7 @@ local KEEP_DAYS = 30
 -- file prefix distinguishes the two channels
 local CHANNEL = {
     financial = { prefix = "",       latest = "latest.html",       label = "Financial Dispatch" },
-    stock     = { prefix = "stock-", latest = "stock-latest.html", label = "Value Dispatch"    },
+    stock     = { prefix = "stock-", latest = "stock-latest.html", label = "Stock Dispatch"    },
 }
 
 local GioDispatch = WidgetContainer:extend{
@@ -51,7 +51,7 @@ function GioDispatch:onDispatcherRegisterActions()
     })
     Dispatcher:registerAction("giodispatch_stocks", {
         category = "none", event = "GioDispatchStocks",
-        title = _("Value Dispatch: today's picks"), general = true,
+        title = _("Stock Dispatch: today's picks"), general = true,
     })
 end
 
@@ -78,11 +78,11 @@ function GioDispatch:addToMainMenu(menu_items)
                 callback = function() self:openNewest("financial", false) end,
             },
             {
-                text = _("Value Dispatch — today's picks"),
+                text = _("Stock Dispatch — today's picks"),
                 callback = function() self:fetchAndOpen("stock") end,
             },
             {
-                text = _("Value Dispatch — last downloaded"),
+                text = _("Stock Dispatch — last downloaded"),
                 callback = function() self:openNewest("stock", false) end,
             },
             {
