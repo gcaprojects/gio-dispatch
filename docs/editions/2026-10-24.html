@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="edition-date" content="2026-10-24">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Financial Dispatch</title>
+<style type="text/css">
+/* crengine-safe: block flow, floats, tables, borders, em units. No flex/grid/JS/remote fonts. */
+html { background-color: #fff; }
+body {
+  font-family: "Source Serif 4", "Noto Serif", Georgia, "Times New Roman", serif;
+  color: #000;
+  background-color: #fff;
+  max-width: 38em;
+  margin: 0 auto;
+  padding: 0 0.5em 2em 0.5em;
+  line-height: 1.4;
+}
+p { margin: 0; text-indent: 1.2em; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+p.first, p.noindent { text-indent: 0; }
+a { color: #000; text-decoration: underline; }
+.page { page-break-before: always; }
+
+/* Nameplate */
+.folio-top { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.12em; text-align: center; margin: 0 0 0.4em 0; }
+.nameplate {
+  font-size: 2.4em; font-weight: normal; text-transform: uppercase; letter-spacing: 0.04em;
+  text-align: center; line-height: 1.1; margin: 0; padding: 0.25em 0 0.2em 0;
+  border-top: 5px double #000; border-bottom: 2px solid #000;
+}
+.folio {
+  font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.1em; text-align: center;
+  padding: 0.35em 0; border-bottom: 5px double #000; margin: 0 0 0.6em 0;
+}
+.motto { font-style: italic; text-align: center; text-indent: 0; margin: 0 0 1.2em 0; font-size: 0.95em; }
+
+/* Section labels */
+.label {
+  font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.15em; text-align: center; font-weight: normal;
+  border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 0.2em 0; margin: 1.4em 0 0.7em 0;
+}
+
+/* Index */
+table.index { width: 100%; border-collapse: collapse; margin: 0 0 1.2em 0; }
+table.index td { vertical-align: top; padding: 0.5em 0.3em; border-bottom: 2px solid #000; }
+table.index td.num { width: 1.6em; font-size: 1.4em; line-height: 1; text-align: center; }
+table.index td.pg { width: 3.5em; text-align: right; font-size: 0.85em; }
+.kicker { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.12em; }
+.idx-head { font-weight: bold; }
+.idx-deck { font-style: italic; font-size: 0.9em; }
+
+/* Story */
+h2.headline { font-size: 1.6em; font-weight: bold; line-height: 1.15; margin: 0.15em 0 0.3em 0; text-align: left; }
+.deck { font-size: 1.1em; font-style: italic; line-height: 1.3; margin: 0 0 0.6em 0; text-indent: 0; text-align: left; }
+.byline { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.1em; text-indent: 0;
+  border-top: 2px solid #000; padding: 0.3em 0 0 0; margin: 0 0 0.8em 0; }
+.dateline { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.08em; }
+.dropcap { float: left; font-size: 3.2em; line-height: 0.85; padding: 0.05em 0.08em 0 0; margin: 0; }
+h3.sub { font-size: 0.95em; font-weight: bold; font-style: italic; margin: 1em 0 0.3em 0; text-align: left; }
+.note { font-size: 0.85em; font-style: italic; text-indent: 0; margin: 0.5em 0; }
+
+/* Formulas */
+.formula { text-align: center; text-indent: 0; margin: 0.7em 0; font-size: 1em; }
+.formula i { font-style: italic; }
+.working { text-align: center; text-indent: 0; margin: 0 0 0.7em 0; font-size: 0.9em; }
+
+/* Figures box */
+table.figs { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 0.85em;
+  border-top: 2px solid #000; border-bottom: 2px solid #000; }
+table.figs caption { font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.1em; text-align: left; padding: 0 0 0.3em 0; }
+table.figs th { text-align: left; font-weight: normal; font-style: italic; border-bottom: 2px solid #000; padding: 0.25em 0.3em; }
+table.figs td { padding: 0.2em 0.3em; border-bottom: 1px solid #000; vertical-align: top; }
+table.figs td.n, table.figs th.n { text-align: right; }
+
+/* Lists */
+ul.checks { margin: 0.4em 0 0.4em 0; padding: 0 0 0 1.2em; }
+ul.checks li { margin: 0 0 0.3em 0; text-align: justify; }
+
+.interview { text-indent: 0; font-style: italic; border-left: 2px solid #000; padding: 0 0 0 0.8em; margin: 0.6em 0; }
+.end { text-align: center; text-indent: 0; margin: 1.2em 0 0 0; font-size: 0.9em; letter-spacing: 0.3em; }
+
+/* Drill */
+.q { margin: 1em 0 0 0; }
+.qtext { text-indent: 0; }
+.qnum { font-weight: bold; }
+ol.opts { list-style-type: upper-alpha; margin: 0.3em 0 0.3em 0; padding: 0 0 0 2em; }
+ol.opts li { margin: 0 0 0.2em 0; }
+.alink { text-indent: 0; text-align: right; font-size: 0.85em; margin: 0.2em 0 0 0; }
+
+/* Answers */
+.ans { margin: 0.9em 0 0 0; padding: 0 0 0.7em 0; border-bottom: 2px solid #000; }
+.verdict { font-weight: bold; text-indent: 0; }
+.why { font-size: 0.92em; margin: 0.3em 0 0 0; text-indent: 0; }
+.back { text-indent: 0; font-size: 0.85em; margin: 0.4em 0 0 0; }
+
+.colophon { font-size: 0.8em; text-align: center; text-indent: 0; border-top: 5px double #000; padding: 0.5em 0 0 0; margin: 2em 0 0 0; letter-spacing: 0.05em; }
+.newc { font-size: 0.75em; letter-spacing: 0.15em; text-transform: uppercase; border: 2px solid #000; padding: 0 0.3em; }
+.tags { font-size: 0.8em; letter-spacing: 0.08em; text-indent: 0; margin: 0.6em 0 0 0; }
+.src { font-size: 0.8em; font-style: italic; text-indent: 0; margin: 0.4em 0 0 0; }
+details, summary { display: block; }
+summary { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.15em; text-align: center;
+  border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 0.3em 0; margin: 1.4em 0 0 0; cursor: pointer; }
+summary::-webkit-details-marker { display: none; }
+.answers-page { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- ================= FRONT PAGE ================= -->
+<div id="front">
+<p class="folio-top">Est. 2026 &#183; For the Fund Analyst</p>
+<h1 class="nameplate">Financial Dispatch</h1>
+<p class="folio">Vol. I &#183; No. 3 &#183; Saturday, 24 October 2026 &#183; Offline Edition</p>
+<p class="motto">The news, and the pipes underneath it.</p>
+
+<p class="label">In This Edition</p>
+<table class="index">
+  <tr>
+    <td class="num">I</td>
+    <td><span class="kicker">Rates &#183; Government Bonds &#183; <span class="newc">New concept</span></span><br>
+      <span class="idx-head"><a href="#s1">The Biggest Yield Drop Since 2023, Priced Properly</a></span><br>
+      <span class="idx-deck">Treasuries rallied as AI stocks sold off. Duration, convexity, and when a bond hedges equities.</span></td>
+  </tr>
+  <tr>
+    <td class="num">II</td>
+    <td><span class="kicker">Credit &#183; Derivatives</span><br>
+      <span class="idx-head"><a href="#s2">A CDS Quote Above 1,000bp Is a Price, Not a Verdict</a></span><br>
+      <span class="idx-deck">What a distressed AI-infrastructure borrower&#8217;s CDS can and cannot tell you.</span></td>
+  </tr>
+  <tr>
+    <td class="num">III</td>
+    <td><span class="kicker">Equities &#183; Index Construction</span><br>
+      <span class="idx-head"><a href="#s3">The Nasdaq Falls 2.6% While the Equal-Weight Index Rises</a></span><br>
+      <span class="idx-deck">One session, two answers to &#8220;the market&#8221;. The arithmetic of concentration.</span></td>
+  </tr>
+  <tr>
+    <td class="num">&#167;</td>
+    <td><span class="kicker">Back Page &#183; Review</span><br>
+      <span class="idx-head"><a href="#back">CLO Overcollateralisation Cushion, Revisited</a></span></td>
+  </tr>
+</table>
+<p class="note">News facts are summarised from the sources cited under each story. Numbers in figures boxes, worked examples and questions are illustrative unless attributed.</p>
+
+<p class="label">Interview Line of the Day</p>
+<p class="interview">&#8220;A Treasury hedges equities only when growth shocks dominate inflation shocks. I want to see the hedge tested in both regimes before I count it as diversification.&#8221;</p>
+</div>
+
+<!-- ================= STORY I ================= -->
+<div class="page" id="s1">
+<p class="kicker" style="text-indent:0">Rates &#183; Government Bonds &#183; Story I &#183; <span class="newc">New concept</span></p>
+<h2 class="headline">The Biggest Yield Drop Since 2023, Priced Properly</h2>
+<p class="deck">The 10-year fell back below 5% as investors ran from AI-linked equities. A one-day move this size is a duration question first, and a correlation question second.</p>
+<p class="byline">From our rates desk</p>
+
+<p class="label">The News</p>
+<p class="first"><span class="dropcap">T</span><span class="dateline">22 Oct.</span> &#8212; The 10-year Treasury yield fell to about 4.95% on Thursday, its largest one-day drop since March 2023, according to reports from 24/7 Wall St. and Seoul Economic Daily. The move came as investors sold AI-linked technology stocks following Meta&#8217;s results, and the Nasdaq Composite fell 2.6%. CNBC&#8217;s headline put it as the yield dropping &#8220;back to 5%&#8221; as investors sought cover from AI worries. Analysts quoted by Seoul Economic Daily said the drop did not mean the anxieties weighing on markets had eased. Traders were watching the Fed meeting on 27&#8211;28 October and PCE inflation data on 29 October.</p>
+
+<p class="label">The Plumbing</p>
+
+<h3 class="sub">1. What a big yield move does to a bond</h3>
+<p class="first">For a bond, the price response to a yield change &#916;<i>y</i> has two terms. The first is duration, which is linear. The second is convexity, which is quadratic and always helps the holder of a plain bond:</p>
+<p class="formula">&#916;<i>P</i>&#8202;/&#8202;<i>P</i> &#8776; &#8722;<i>D</i><sub>mod</sub> &#215; &#916;<i>y</i></p>
+<p class="formula">&#160;&#160;&#160;+ &#189; &#215; <i>C</i> &#215; (&#916;<i>y</i>)&#178;</p>
+<p>Because the convexity term is the same whichever way yields move, gains from a fall exceed losses from an equal rise. The effect is small for a one-day move of this kind and material for a 100bp move, as the box shows.</p>
+
+<table class="figs">
+  <caption>Illustrative numbers &#183; 10-yr 5% par bond</caption>
+  <tr><th>&#160;</th><th class="n">&#8722;100bp</th><th class="n">+100bp</th></tr>
+  <tr><td>Duration term</td><td class="n">+7.79%</td><td class="n">&#8722;7.79%</td></tr>
+  <tr><td>Convexity term</td><td class="n">+0.37%</td><td class="n">+0.37%</td></tr>
+  <tr><td>Full reprice</td><td class="n">+8.18%</td><td class="n">&#8722;7.44%</td></tr>
+</table>
+<p class="note">Semi-annual coupons: D<sub>mod</sub> = 7.79, C = 73.6.</p>
+
+<h3 class="sub">2. Why yields fell: the stock&#8211;bond correlation</h3>
+<p class="first">Yields fell here because the shock was about <i>growth</i> and equity risk appetite, not about inflation. In that regime Treasuries rally when stocks fall, so the correlation between bond and equity returns is negative and bonds hedge. If the dominant shock is inflation or term premium, as in 2022, bonds and stocks fall together and the correlation turns positive. The sign is a feature of the regime, not a constant.</p>
+<p class="formula"><i>&#963;</i><sub>p</sub>&#178; = <i>w</i><sub>e</sub>&#178;<i>&#963;</i><sub>e</sub>&#178; + <i>w</i><sub>b</sub>&#178;<i>&#963;</i><sub>b</sub>&#178;</p>
+<p class="formula">&#160;&#160;&#160;+ 2<i>w</i><sub>e</sub><i>w</i><sub>b</sub><i>&#961;&#963;</i><sub>e</sub><i>&#963;</i><sub>b</sub></p>
+<table class="figs">
+  <caption>Illustrative numbers &#183; 60/40 portfolio</caption>
+  <tr><th>Equity vol 16%, bond vol 7%</th><th class="n">Portfolio vol</th></tr>
+  <tr><td><i>&#961;</i> = &#8722;0.3</td><td class="n">9.2%</td></tr>
+  <tr><td><i>&#961;</i> = 0</td><td class="n">10.0%</td></tr>
+  <tr><td><i>&#961;</i> = +0.3</td><td class="n">10.8%</td></tr>
+</table>
+<p class="first">The same weights and volatilities give a portfolio about 1.6 points riskier when the correlation flips from &#8722;0.3 to +0.3. A fund that uses duration as its equity hedge is making a regime bet.</p>
+
+<p class="label">Why It Matters for a Fund Analyst</p>
+<ul class="checks">
+  <li><b>Ask how the hedge was tested.</b> Does the back-test include inflation-shock periods, or only the post-2000 regime of negative correlation?</li>
+  <li><b>Ask for convexity alongside duration</b> for any fund that uses long bonds as a tail hedge, since the payoff in a rally is what you are buying.</li>
+  <li><b>Separate level from path.</b> A one-day fall says nothing about whether the term premium has changed, and a Fed meeting is days away.</li>
+</ul>
+
+<p class="tags">Concepts: FI-CONVEXITY &#183; FI-DURATION &#183; <b>FI-STOCKBOND-CORR</b> (new) &#183; FI-TERMPREM</p>
+<p class="src">Sources: 24/7 Wall St., &#8220;The 10-Year Yield Just Fell Below 5% as Investors Fled AI Stocks&#8221; (23 Oct.); Seoul Economic Daily, &#8220;U.S. 10-Year Yield Falls Below 5% as Investors Flee to Safety&#8221; (23 Oct.); CNBC, &#8220;10-year Treasury yield drops back to 5% this week as investors seek cover from AI worries&#8221; (23 Oct.); Investing.com, &#8220;Nasdaq posts worst day since June as AI financing worries batter risk sentiment&#8221;.</p>
+<p class="end">&#8212; &#9670; &#8212;</p>
+</div>
+
+<div class="page" id="d1">
+<p class="label">The Drill &#183; Story I</p>
+
+<div class="q" id="q1">
+<p class="qtext"><span class="qnum">1.</span> A bond has modified duration 7.8 and convexity 70. Its yield falls 100bp. Using both terms, what is the approximate price change?</p>
+<ol class="opts">
+  <li>+7.80%</li>
+  <li>+8.15%</li>
+  <li>+7.45%</li>
+  <li>+8.50%</li>
+</ol>
+</div>
+
+<div class="q" id="q2">
+<p class="qtext"><span class="qnum">2.</span> A 60/40 portfolio has equity volatility of 16% and bond volatility of 7%. The bond&#8211;equity correlation moves from 0 to +0.3. Roughly what is the new portfolio volatility?</p>
+<ol class="opts">
+  <li>9.2%</li>
+  <li>10.0%</li>
+  <li>10.8%</li>
+  <li>12.4%</li>
+</ol>
+</div>
+
+<div class="q" id="q3">
+<p class="qtext"><span class="qnum">3.</span> A manager says long Treasuries hedge his equity book because yields fall when stocks sell off. What is the best response?</p>
+<ol class="opts">
+  <li>Agree, because yields fall in every equity sell-off.</li>
+  <li>Ask how the hedge performed when inflation or term-premium shocks drove the sell-off, since the correlation flips sign across regimes.</li>
+  <li>Ask for the fund&#8217;s yield to maturity.</li>
+  <li>Ask for its convexity, since that settles the question.</li>
+</ol>
+</div>
+<details class="reveal">
+<summary>Answers &#8212; tap here, or turn the page &#183; Story I</summary>
+<div class="answers-page">
+<div class="ans" id="a1">
+<p class="verdict">1. B &#8212; about +8.15%.</p>
+<p class="why">Duration: 7.8 &#215; 1% = 7.80%. Convexity: &#189; &#215; 70 &#215; (0.01)&#178; = 0.35%. Sum: 8.15%.</p>
+<p class="why"><i>A</i> drops the convexity term. <i>C</i> subtracts it, a sign error: convexity adds to the price in both directions. <i>D</i> forgets the &#189;, giving 70 &#215; 0.0001 = 0.70%.</p>
+</div>
+<div class="ans" id="a2">
+<p class="verdict">2. C &#8212; about 10.8%.</p>
+<p class="why">Variance = 0.36 &#215; 256 + 0.16 &#215; 49 + 2 &#215; 0.6 &#215; 0.4 &#215; 0.3 &#215; 16 &#215; 7 = 92.16 + 7.84 + 16.13 = 116.13. Square root: 10.78%.</p>
+<p class="why"><i>A</i> uses &#8722;0.3, a sign error. <i>B</i> is the zero-correlation answer, the starting point. <i>D</i> is the weighted average of volatilities, which assumes correlation of +1.</p>
+</div>
+<div class="ans" id="a3">
+<p class="verdict">3. B &#8212; test the hedge across regimes.</p>
+<p class="why">Bonds hedge equities when growth shocks dominate. When inflation shocks dominate, both fall. A track record from one regime does not prove the hedge.</p>
+<p class="why"><i>A</i> is a textbook rule applied as if it were universal. <i>C</i> is true but irrelevant to the hedge. <i>D</i> is useful for the payoff shape, but it does not address the correlation.</p>
+</div>
+</div>
+</details>
+</div>
+
+<!-- ================= STORY II ================= -->
+<div class="page" id="s2">
+<p class="kicker" style="text-indent:0">Credit &#183; Derivatives &#183; Story II</p>
+<h2 class="headline">A CDS Quote Above 1,000bp Is a Price, Not a Verdict</h2>
+<p class="deck">CoreWeave&#8217;s credit default swaps trade at levels analysts call distressed. Reading the quote correctly takes three conversions.</p>
+<p class="byline">From our credit desk</p>
+
+<p class="label">The News</p>
+<p class="first"><span class="dropcap">C</span><span class="dateline">23 Oct.</span> &#8212; CNBC reported CoreWeave&#8217;s five-year credit default swap spread at about 1,145 basis points on 21 October and about 1,129 on 23 October. An analyst at S&amp;P Global Market Intelligence told CNBC that roughly 1,000bp or more generally signals credit distress. CNBC and Benzinga put the yield on CoreWeave&#8217;s 9.75% 2031 bond at roughly 15.6&#8211;15.8%. CNBC reported total debt of about $51.6bn and a share price down about 36% in October. Blackstone&#8217;s Jon Gray said the company can work through its financing pressure.</p>
+
+<p class="label">The Plumbing</p>
+
+<h3 class="sub">1. From spread to default probability</h3>
+<p class="first">A CDS spread pays for protection against loss. With a constant hazard rate &#955; and recovery <i>R</i>, the spread approximates expected loss per year:</p>
+<p class="formula"><i>s</i> &#8776; &#955; &#215; (1 &#8722; <i>R</i>)</p>
+<p class="formula">PD<sub><i>T</i></sub> = 1 &#8722; e<sup>&#8722;&#955;<i>T</i></sup></p>
+<table class="figs">
+  <caption>Illustrative numbers &#183; 10% spread, 5 years</caption>
+  <tr><th>&#160;</th><th class="n">&#955;</th><th class="n">5-yr PD</th></tr>
+  <tr><td><i>R</i> = 40%</td><td class="n">16.7%</td><td class="n">56.5%</td></tr>
+  <tr><td><i>R</i> = 20%</td><td class="n">12.5%</td><td class="n">46.5%</td></tr>
+</table>
+<p class="first">Notice the direction: for a given spread, a <i>lower</i> assumed recovery means a <i>lower</i> implied default probability, because each default costs more. The number depends on the recovery convention.</p>
+
+<h3 class="sub">2. Risk-neutral, not real-world</h3>
+<p>That probability is risk-neutral. It contains the risk premium that sellers of protection require, hedging demand from lenders and holders who cannot sell their debt, and liquidity effects in a thin market. For a name with heavy hedging demand the real-world default probability is typically lower than the implied one. The quote is a price of protection, not a forecast.</p>
+
+<h3 class="sub">3. Upfront, and the basis</h3>
+<p>When the spread is far above the standard coupon (5% for the standard high-yield-style contract), the buyer pays the difference up front:</p>
+<p class="formula">Upfront &#8776; (<i>s</i> &#8722; coupon) &#215; RPV01</p>
+<p class="working">illustrative: (10% &#8722; 5%) &#215; 3.1 &#8776; 15.5 points</p>
+<p>The CDS&#8211;bond basis compares the two prices of the same risk: <i>basis</i> = CDS spread &#8722; bond spread. A negative basis means the bond looks cheap against its protection. Funding costs, bond illiquidity and the cheapest-to-deliver option all feed it, so a large basis is not free money.</p>
+
+<p class="label">Why It Matters for a Fund Analyst</p>
+<ul class="checks">
+  <li><b>Use CDS as a cross-check on marks.</b> If a private-credit fund holds loans to AI-infrastructure borrowers, ask how its Level 3 marks compare with the traded CDS and bond spreads of comparable names.</li>
+  <li><b>Ask for look-through exposure</b> to data-centre and GPU-financed borrowers across direct lending, ABS and CLO collateral.</li>
+  <li><b>Ask about recovery assumptions.</b> Collateral that depreciates quickly, such as hardware, deserves a lower recovery than a typical senior secured loan.</li>
+</ul>
+
+<p class="tags">Concepts: DV-CDS &#183; CR-SPREADS &#183; CR-DEFAULT-LGD &#183; CR-MARKLAG</p>
+<p class="src">Sources: CNBC, &#8220;CoreWeave&#8217;s market confidence erodes as bond yields spike and stock sinks&#8221; (21 Oct.); CNBC, &#8220;CoreWeave credit default swaps hit distress levels as investors sour on AI debt&#8221; (15 Oct.); CNBC, &#8220;Blackstone&#8217;s Jon Gray says CoreWeave can &#8216;find a way through&#8217; financing pressure&#8221; (22 Oct.); CNBC, 10-year yield article (23 Oct.); Benzinga, CoreWeave debt stress.</p>
+<p class="end">&#8212; &#9670; &#8212;</p>
+</div>
+
+<div class="page" id="d2">
+<p class="label">The Drill &#183; Story II</p>
+
+<div class="q" id="q4">
+<p class="qtext"><span class="qnum">4.</span> A one-year CDS trades at 8% with a recovery assumption of 40%. Assuming a constant hazard rate, what is the implied one-year default probability?</p>
+<ol class="opts">
+  <li>8.0%</li>
+  <li>12.5%</li>
+  <li>4.8%</li>
+  <li>13.3%</li>
+</ol>
+</div>
+
+<div class="q" id="q5">
+<p class="qtext"><span class="qnum">5.</span> A manager says a five-year CDS at 1,100bp proves the market sees a 60% chance of default within five years. What is the most accurate objection?</p>
+<ol class="opts">
+  <li>The spread is the annual default probability, so the claim understates it.</li>
+  <li>The figure is risk-neutral and recovery-dependent; it includes risk premium, hedging demand and liquidity, so it likely overstates the real-world probability.</li>
+  <li>Spreads cannot be converted to default probabilities.</li>
+  <li>The conversion is invalid above 1,000bp because the contract trades with an upfront payment.</li>
+</ol>
+</div>
+
+<div class="q" id="q6">
+<p class="qtext"><span class="qnum">6.</span> A contract with a 5% standard coupon trades at an equivalent running spread of 10%. The risky annuity (RPV01) is 3.1. What upfront payment does the protection buyer make?</p>
+<ol class="opts">
+  <li>5.0 points</li>
+  <li>15.5 points</li>
+  <li>31.0 points</li>
+  <li>&#8722;15.5 points</li>
+</ol>
+</div>
+<details class="reveal">
+<summary>Answers &#8212; tap here, or turn the page &#183; Story II</summary>
+<div class="answers-page">
+<div class="ans" id="a4">
+<p class="verdict">4. B &#8212; about 12.5%.</p>
+<p class="why">&#955; = 0.08 &#247; 0.60 = 13.33%. PD = 1 &#8722; e<sup>&#8722;0.1333</sup> = 12.5%.</p>
+<p class="why"><i>A</i> treats the spread as the probability and ignores recovery. <i>C</i> multiplies by (1 &#8722; <i>R</i>) instead of dividing. <i>D</i> is the hazard rate, not the probability over the year.</p>
+</div>
+<div class="ans" id="a5">
+<p class="verdict">5. B &#8212; risk-neutral and recovery-dependent.</p>
+<p class="why">With <i>R</i> = 40%, 1,100bp gives &#955; = 18.3% and a five-year PD of 60.0%, so the arithmetic is right. The objection is what the number means: it is a risk-neutral price of protection.</p>
+<p class="why"><i>A</i> misreads a spread as a probability. <i>C</i> is too absolute; the conversion works, with caveats. <i>D</i> is wrong because upfront quotes convert back to a running spread.</p>
+</div>
+<div class="ans" id="a6">
+<p class="verdict">6. B &#8212; 15.5 points.</p>
+<p class="why">(10% &#8722; 5%) &#215; 3.1 = 15.5 points, paid by the buyer because the spread exceeds the coupon.</p>
+<p class="why"><i>A</i> forgets the annuity. <i>C</i> applies the annuity to the full spread instead of the excess over the coupon. <i>D</i> is a sign error: the seller pays upfront only when the spread is below the coupon.</p>
+</div>
+</div>
+</details>
+</div>
+
+<!-- ================= STORY III ================= -->
+<div class="page" id="s3">
+<p class="kicker" style="text-indent:0">Equities &#183; Index Construction &#183; Story III</p>
+<h2 class="headline">The Nasdaq Falls 2.6% While the Equal-Weight Index Rises</h2>
+<p class="deck">The same session gave two different answers to &#8220;what did the market do?&#8221; The difference is weights, and it matters for risk measurement.</p>
+<p class="byline">From our equities desk</p>
+
+<p class="label">The News</p>
+<p class="first"><span class="dropcap">T</span><span class="dateline">22 Oct.</span> &#8212; The Nasdaq Composite fell 2.6% to 26,008.86, its worst session since early June, according to Kiplinger and Mitrade. The cap-weighted S&amp;P 500 fell about 1.2%, while the equal-weight S&amp;P 500 rose, by between roughly 0.3% and 0.8% depending on the outlet (Mitrade, Schwab, Chartmill). Meta fell roughly 7% after guiding 2026 capital spending to $135&#8211;145bn. Money moved into defensive sectors.</p>
+
+<p class="label">The Plumbing</p>
+
+<h3 class="sub">1. Weights decide the headline</h3>
+<p class="first">A cap-weighted index return is <i>R</i> = &#931; <i>w</i><sub>i</sub><i>r</i><sub>i</sub>, with weights proportional to market value. An equal-weight index uses 1/<i>N</i> for every stock. The gap is:</p>
+<p class="formula"><i>R</i><sub>cap</sub> &#8722; <i>R</i><sub>eq</sub> = &#931; (<i>w</i><sub>i</sub> &#8722; 1/<i>N</i>) <i>r</i><sub>i</sub></p>
+<p>It is positive when large stocks outperform and negative when they fall behind. A single theme concentrated in the largest names, here AI capital spending, can move the headline without moving the median stock.</p>
+<table class="figs">
+  <caption>Illustrative numbers &#183; 500 stocks</caption>
+  <tr><th>&#160;</th><th class="n">Weight</th><th class="n">Return</th></tr>
+  <tr><td>Top 10</td><td class="n">35%</td><td class="n">&#8722;4.0%</td></tr>
+  <tr><td>Other 490</td><td class="n">65%</td><td class="n">+0.6%</td></tr>
+  <tr><td>Cap-weighted</td><td class="n">&#160;</td><td class="n">&#8722;1.0%</td></tr>
+  <tr><td>Equal-weighted</td><td class="n">&#160;</td><td class="n">+0.5%</td></tr>
+</table>
+
+<h3 class="sub">2. Measuring the concentration</h3>
+<p class="first">The effective number of stocks is the inverse of the sum of squared weights. It falls as weight piles into a few names:</p>
+<p class="formula"><i>N</i><sub>eff</sub> = 1 &#247; &#931; <i>w</i><sub>i</sub>&#178;</p>
+<p>An equal-weight portfolio of 500 stocks has <i>N</i><sub>eff</sub> = 500. A cap-weighted index with the same 500 names has a much lower figure, so it behaves like a smaller portfolio.</p>
+
+<h3 class="sub">3. Tracking error</h3>
+<p>Tracking error is the volatility of active return. It scales with the square root of time:</p>
+<p class="formula">TE<sub>annual</sub> = TE<sub>daily</sub> &#215; &#8730;252</p>
+<p class="working">illustrative: 0.40% &#215; 15.87 &#8776; 6.3%</p>
+<p>An equal-weight fund measured against a cap-weighted benchmark can show tracking error of this size even though it holds the same stocks.</p>
+
+<p class="label">Why It Matters for a Fund Analyst</p>
+<ul class="checks">
+  <li><b>Check which benchmark the fund reports against.</b> Beating the equal-weight index and lagging the cap-weighted one tell different stories.</li>
+  <li><b>Ask for the effective number of holdings</b> and the top-10 weight, not just the count of positions.</li>
+  <li><b>Check factor overlap.</b> If several managers in the line-up hold the same mega-cap theme, diversification across them is smaller than it looks.</li>
+</ul>
+
+<p class="tags">Concepts: EQ-INDEX &#183; RP-TRACKING-ERROR &#183; EQ-FACTOR</p>
+<p class="src">Sources: Kiplinger, &#8220;Nasdaq Sinks 694 Points as Meta Stock Slumps After Earnings&#8221; (22 Oct.); Mitrade, &#8220;Nasdaq closes at 26,008.86&#8221; (23 Oct.); Schwab, &#8220;AI Pressure Persists, Oil Up as Price Data Looms&#8221;; Chartmill, &#8220;Meta&#8217;s Spending Plans Reignite AI Bubble Fears&#8221; (22 Oct.).</p>
+<p class="end">&#8212; &#9670; &#8212;</p>
+</div>
+
+<div class="page" id="d3">
+<p class="label">The Drill &#183; Story III</p>
+
+<div class="q" id="q7">
+<p class="qtext"><span class="qnum">7.</span> In a 500-stock index, the top 10 stocks have 35% of the weight and return &#8722;4.0%. The other 490 return +0.6% on average. What is the cap-weighted index return?</p>
+<ol class="opts">
+  <li>&#8722;1.4%</li>
+  <li>&#8722;1.0%</li>
+  <li>&#8722;1.7%</li>
+  <li>+0.5%</li>
+</ol>
+</div>
+
+<div class="q" id="q8">
+<p class="qtext"><span class="qnum">8.</span> A portfolio has daily tracking error of 0.40%. Using 252 trading days, what is the approximate annual tracking error?</p>
+<ol class="opts">
+  <li>0.4%</li>
+  <li>6.3%</li>
+  <li>7.6%</li>
+  <li>100.8%</li>
+</ol>
+</div>
+
+<div class="q" id="q9">
+<p class="qtext"><span class="qnum">9.</span> A manager says his index fund is &#8220;diversified&#8221; because it holds 500 stocks. Which analysis best tests that claim?</p>
+<ol class="opts">
+  <li>Count the holdings again.</li>
+  <li>Compute the effective number of stocks (1 &#247; &#931;<i>w</i>&#178;), the top-10 weight, and the tracking error against an equal-weight version of the index.</li>
+  <li>Compare the trailing one-year Sharpe ratio with the benchmark.</li>
+  <li>Compare the expense ratio with peers.</li>
+</ol>
+</div>
+<details class="reveal">
+<summary>Answers &#8212; tap here, or turn the page &#183; Story III</summary>
+<div class="answers-page">
+<div class="ans" id="a7">
+<p class="verdict">7. B &#8212; about &#8722;1.0%.</p>
+<p class="why">0.35 &#215; (&#8722;4.0) + 0.65 &#215; 0.6 = &#8722;1.40 + 0.39 = &#8722;1.01%.</p>
+<p class="why"><i>A</i> counts only the top 10. <i>C</i> is the simple average of the two group returns, ignoring weights. <i>D</i> is the equal-weight result, (10 &#215; &#8722;4.0 + 490 &#215; 0.6) &#247; 500 = +0.51%.</p>
+</div>
+<div class="ans" id="a8">
+<p class="verdict">8. B &#8212; about 6.3%.</p>
+<p class="why">&#8730;252 = 15.87. 0.40% &#215; 15.87 = 6.35%, about 6.3%.</p>
+<p class="why"><i>A</i> forgets to scale. <i>C</i> uses &#8730;365, calendar days. <i>D</i> multiplies by 252 instead of its square root.</p>
+</div>
+<div class="ans" id="a9">
+<p class="verdict">9. B &#8212; effective number, top-10 weight, tracking error versus equal weight.</p>
+<p class="why">These measure how concentrated the weights are and how different the portfolio behaves from a spread-out one.</p>
+<p class="why"><i>A</i> counts names, not weights. <i>C</i> measures past reward per unit of risk, not diversification. <i>D</i> is about cost.</p>
+</div>
+</div>
+</details>
+</div>
+
+<!-- ================= BACK PAGE ================= -->
+<div class="page" id="back">
+<p class="label">Back Page &#183; Review &#183; first seen 22 Oct.</p>
+<p class="note">A concept from an earlier edition, with a new question.</p>
+<div class="q" id="q10">
+<p class="qtext"><span class="qnum">10.</span> A CLO has performing collateral par of $450m. The Class A and Class B notes total $360m. The Class A/B overcollateralisation test requires a ratio of at least 120%. By roughly what percentage can performing par fall before the test fails?</p>
+<ol class="opts">
+  <li>5.0%</li>
+  <li>4.0%</li>
+  <li>16.7%</li>
+  <li>20.0%</li>
+</ol>
+</div>
+<details class="reveal">
+<summary>Answers &#8212; tap here, or turn the page &#183; Back Page</summary>
+<div class="answers-page">
+<div class="ans" id="a10">
+<p class="verdict">10. B &#8212; 4.0%.</p>
+<p class="why">The ratio today is 450 &#247; 360 = 125%. The test fails when par falls below 1.20 &#215; 360 = $432m. The cushion is 18 &#247; 450 = 4.0%. After a failure, cash is diverted from equity to pay down the senior notes.</p>
+<p class="why"><i>A</i> uses coverage points (125 &#8722; 120) as a percentage of par. <i>C</i> is Class B&#8217;s share of the rated notes (60 &#247; 360). <i>D</i> subtracts 100% from the trigger.</p>
+</div>
+</div>
+</details>
+<p class="colophon">Financial Dispatch &#183; 24 October 2026 &#183; Illustrative figures labelled &#183; Not investment advice</p>
+</div>
+
+
+</body>
+</html>

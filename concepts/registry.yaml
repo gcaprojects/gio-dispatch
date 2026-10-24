@@ -14,39 +14,41 @@ areas:
   DD: Fund due diligence
 
 concepts:
-  FI-DURATION: {name: "Duration: modified, Macaulay, effective", status: established, last_seen: 2026-10-23}
-  FI-CONVEXITY: {name: Convexity, status: established}
+  FI-DURATION: {name: "Duration: modified, Macaulay, effective", status: established, last_seen: 2026-10-24}
+  FI-CONVEXITY: {name: Convexity, status: established, last_seen: 2026-10-24}
   FI-KEYRATE: {name: Key-rate duration and curve-shape risk, status: established, last_seen: 2026-10-22}
   FI-CARRY-ROLL: {name: Carry and roll-down, status: established, last_seen: 2026-10-23}
-  FI-TERMPREM: {name: Term premium vs expected path, status: established, last_seen: 2026-10-22}
+  FI-TERMPREM: {name: Term premium vs expected path, status: established, last_seen: 2026-10-24}
   FI-REPO: {name: "Repo: GC vs specials, haircuts", status: established, last_seen: 2026-10-23}
   FI-BASIS: {name: "Cash-futures basis, CTD, implied repo", status: established}
   FI-SWAPSPREAD: {name: Swap spreads, status: established}
   FI-INFLATION: {name: "Breakevens, linker carry, index lag", status: established, last_seen: 2026-10-23}
   FI-MBS-NEGCONVEX: {name: MBS negative convexity, status: established}
-  CR-SPREADS: {name: "OAS, Z-spread, spread duration", status: established, last_seen: 2026-10-22}
-  CR-DEFAULT-LGD: {name: Default and loss given default, status: established, last_seen: 2026-10-22}
+  CR-SPREADS: {name: "OAS, Z-spread, spread duration", status: established, last_seen: 2026-10-24}
+  CR-DEFAULT-LGD: {name: Default and loss given default, status: established, last_seen: 2026-10-24}
   CR-COVENANT: {name: "Covenants: cov-lite, EBITDA add-backs", status: established, last_seen: 2026-10-22}
   CR-LME: {name: "Liability management: uptiers, drop-downs", status: established}
   CR-PIK: {name: "PIK: structured vs bad PIK", status: established}
   CR-NONACCRUAL: {name: Non-accruals, status: established, last_seen: 2026-10-23}
-  CR-CLO: {name: "CLOs: waterfall, OC/IC tests, CCC buckets", status: established, last_seen: 2026-10-22}
+  CR-CLO: {name: "CLOs: waterfall, OC/IC tests, CCC buckets", status: established, last_seen: 2026-10-24}
   CR-BDC: {name: "BDCs: NAV discount, RIC distribution, asset coverage", status: established, last_seen: 2026-10-22}
   CR-NAVFAC: {name: NAV facilities and GP-level leverage, status: established}
-  CR-MARKLAG: {name: Level 3 mark lag and smoothing, status: established}
+  CR-MARKLAG: {name: Level 3 mark lag and smoothing, status: established, last_seen: 2026-10-24}
   CR-ARR-LOAN: {name: Recurring-revenue (ARR) loans, status: provisional, last_seen: 2026-10-22,
     core_claim: "ARR loans are sized on recurring revenue, not EBITDA, so retention is the credit; churn raises leverage and compresses the recovery multiple at the same time."}
+  FI-STOCKBOND-CORR: {name: Stock-bond correlation and the Treasury hedge, status: provisional, last_seen: 2026-10-24,
+    core_claim: "Treasuries hedge equities only when growth shocks dominate; when inflation or term-premium shocks dominate, the correlation turns positive, so the hedge is regime-dependent."}
   DV-FWD-PARITY: {name: "Cost of carry, covered interest parity", status: established}
   DV-XCCY-BASIS: {name: Cross-currency basis, status: established}
   DV-SWAP-VAL: {name: Swap valuation, status: established}
   DV-GREEKS: {name: Greeks and dealer gamma, status: established}
   DV-VOLSURFACE: {name: "Vol surface: skew, term structure, VIX", status: established}
-  DV-CDS: {name: "CDS: basis, auctions, index rolls", status: established}
+  DV-CDS: {name: "CDS: basis, auctions, index rolls", status: established, last_seen: 2026-10-24}
   DV-MARGIN: {name: "VM vs IM, procyclicality, CCP waterfalls", status: established}
   EQ-ERP: {name: Equity risk premium, status: established}
   EQ-BUYBACK: {name: "Buybacks: EPS accretion vs value", status: established}
-  EQ-INDEX: {name: Index rebalancing and concentration, status: established}
-  EQ-FACTOR: {name: Factor crowding and momentum crashes, status: established}
+  EQ-INDEX: {name: Index rebalancing and concentration, status: established, last_seen: 2026-10-24}
+  EQ-FACTOR: {name: Factor crowding and momentum crashes, status: established, last_seen: 2026-10-24}
   EQ-DCF-RATE: {name: Rate sensitivity of long-duration equity, status: established, last_seen: 2026-10-22}
   AL-PE-SECONDARIES: {name: "PE secondaries, continuation vehicles", status: established}
   AL-JCURVE-IRR: {name: "J-curve: IRR vs TVPI/DPI", status: established}
@@ -70,7 +72,7 @@ concepts:
   RP-VAR-ES: {name: VaR and expected shortfall, status: established}
   RP-ATTRIBUTION: {name: "Brinson and fixed-income attribution", status: established}
   RP-SHARPE-SMOOTHING: {name: "Sharpe smoothing, unsmoothing", status: established}
-  RP-TRACKING-ERROR: {name: Tracking error, status: established}
+  RP-TRACKING-ERROR: {name: Tracking error, status: established, last_seen: 2026-10-24}
   RP-DRAWDOWN-LIQ: {name: Liquidity-adjusted drawdown risk, status: established}
   DD-LIQ-MISMATCH: {name: Asset vs redemption liquidity mismatch, status: established, last_seen: 2026-10-23}
   DD-VALUATION-GOV: {name: Valuation governance, status: established, last_seen: 2026-10-22}

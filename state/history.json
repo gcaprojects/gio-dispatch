@@ -55,6 +55,34 @@
         }
       ],
       "back_page_concept": "CR-NONACCRUAL"
+    },
+    {
+      "date": "2026-10-24",
+      "issue": 3,
+      "stories": [
+        {
+          "headline": "The Biggest Yield Drop Since 2023, Priced Properly",
+          "primary_concepts": [
+            "FI-CONVEXITY",
+            "FI-STOCKBOND-CORR"
+          ]
+        },
+        {
+          "headline": "A CDS Quote Above 1,000bp Is a Price, Not a Verdict",
+          "primary_concepts": [
+            "DV-CDS",
+            "CR-SPREADS"
+          ]
+        },
+        {
+          "headline": "The Nasdaq Falls 2.6% While the Equal-Weight Index Rises",
+          "primary_concepts": [
+            "EQ-INDEX",
+            "RP-TRACKING-ERROR"
+          ]
+        }
+      ],
+      "back_page_concept": "CR-CLO"
     }
   ]
 }
