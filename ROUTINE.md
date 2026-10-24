@@ -21,18 +21,20 @@ Search the web for market and financial news from the last 72 hours. Prefer prim
 
 Never skip an edition because pages can't be fetched. Build it from search results under these rules.
 
-## 3. Pick 3 stories
+## 3. Pick 3 stories + The Allocator
 Score each candidate on the rubric (mechanism depth, concept grounding, fund-analyst relevance, quantifiability, factual anchor; 0–3 each, at least 9/15 to qualify). Constraints:
 - **Story I is always fixed income.** That means rates and government bonds, the curve, inflation-linked bonds, corporate bonds and credit spreads, MBS/ABS/CLOs, or bond funding and market structure (repo, basis, auctions, swap spreads). Its primary concept comes from FI, a public-bond CR concept, or CB. If no fixed-income story scores 9/15, still run the best fixed-income story.
 - Stories II and III come from two other areas, and at least one of the three stories is from credit, alternatives or fund due diligence.
+- **Story IV is always The Allocator.** It covers multi-asset portfolio management: cross-asset correlations, portfolio construction mechanics, risk parity or factor-tilt regimes, rebalancing flows, volatility regime shifts, FX overlays, or liability-driven investing. Anchor it to something in the news from the last 72 hours that has clear portfolio-level implications — a big cross-asset move, a correlation break, a macro regime signal, or a policy shock with multi-asset transmission. The plumbing explains the mechanism through a portfolio lens (how it affects the allocation decision, not just the individual asset).
 - No concept used as a *primary* concept in the last 10 editions unless the news genuinely demands it.
 - **Open concept list.** If a story's mechanism is not in the registry, propose a new concept: ID, area (new areas are allowed), a one-line core claim, and 2+ sources. About once a week, prefer a story that introduces a new concept. Mark it `NEW CONCEPT` in the edition.
 
 ## 4. Write the edition
 Follow `template/reference-edition.html` exactly:
-- Front page: nameplate, folio line (increment the issue number from history), index of 3 stories plus Back Page (Story I, the fixed-income story, listed first), interview line of the day.
+- Front page: nameplate, folio line (increment the issue number from history), index of 4 stories plus Back Page (Story I first, The Allocator listed as Story IV), interview line of the day.
 - Each story: The News (facts only from sources, with the date), The Plumbing (mechanisms with plain-text Unicode formulas and labelled illustrative figures boxes), Why It Matters for a Fund Analyst, concept tags, sources line.
 - Each drill: 3 multiple-choice questions (at least one *apply* and one *analyse/evaluate*), never asking about news facts. Then a `<details class="reveal">` toggle with that section's answers, each giving the working and why each wrong option is tempting.
+- **The Allocator (Story IV)** follows the same format. Its Plumbing section must show the portfolio-level mechanism quantitatively — a figures box with before/after allocation weights, a correlation or covariance calculation, a rebalancing trade worked example, or a factor attribution. Its "Why It Matters" bullets are framed as allocation or risk decisions.
 - Back Page: one new question on the most overdue concept from history (spaced repetition: 3, 7, 16, 35 days).
 - Set `<meta name="edition-date" content="DATE">`. The KOReader plugin depends on it.
 - **The reader's device is a Kindle Paperwhite 3** (6", 1072×1448, 300 ppi, greyscale) in KOReader. The stylesheet is already tuned for it, so don't change it. In the content: figures tables have at most 3 columns with short cells; each displayed formula fits on about 40 characters per line (split long ones across two `formula` lines); no images, colour, dotted lines or inline styles that shrink text.

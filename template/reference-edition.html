@@ -135,6 +135,12 @@ summary::-webkit-details-marker { display: none; }
       <span class="idx-deck">CLO ETFs take a record month of inflows. What the investors are buying.</span></td>
   </tr>
   <tr>
+    <td class="num">IV</td>
+    <td><span class="kicker">Multi-Asset &#183; The Allocator</span><br>
+      <span class="idx-head"><a href="#s4">What the 60/40 Breakdown Costs in a Stagflation Regime</a></span><br>
+      <span class="idx-deck">Bonds and equities fell together. Here is what that does to portfolio maths.</span></td>
+  </tr>
+  <tr>
     <td class="num">&#167;</td>
     <td><span class="kicker">Back Page &#183; Review</span><br>
       <span class="idx-head"><a href="#back">BDC Asset Coverage, Revisited</a></span></td>
@@ -444,12 +450,108 @@ summary::-webkit-details-marker { display: none; }
 </details>
 </div>
 
+<!-- ================= STORY IV — THE ALLOCATOR ================= -->
+<div class="page" id="s4">
+<p class="kicker" style="text-indent:0">Multi-Asset &#183; The Allocator &#183; Story IV</p>
+<h2 class="headline">What the 60/40 Breakdown Costs in a Stagflation Regime</h2>
+<p class="deck">With CPI above 3.7% and the 10-year at 5.1%, bonds and equities are falling on the same days again. The portfolio maths behind that matters more than the headline.</p>
+<p class="byline">From our multi-asset desk</p>
+
+<p class="label">The News</p>
+<p class="first"><span class="dropcap">O</span><span class="dateline">22 Oct.</span> &#8212; September CPI came in at 3.7% year on year, above forecasts, and the 10-year Treasury yield closed at about 5.1%. On the same day, US equity indices also fell. The simultaneous decline in both asset classes is a textbook signal that equity-bond correlation has turned positive &#8212; a structural feature of inflationary regimes that erodes the principal diversification benefit of a traditional 60/40 portfolio. Risk parity funds, which lever bonds to match equity volatility, are acutely exposed when this regime shift occurs.</p>
+
+<p class="label">The Plumbing</p>
+
+<h3 class="sub">1. Why correlation is the hinge in portfolio variance</h3>
+<p class="first">For a two-asset portfolio with weight <i>w</i><sub>eq</sub> = 0.60 in equities (&#963;<sub>eq</sub> = 16%) and <i>w</i><sub>b</sub> = 0.40 in bonds (&#963;<sub>b</sub> = 7%), the portfolio variance is:</p>
+<p class="formula">&#963;&#178;<sub>p</sub> = <i>w</i>&#178;<sub>eq</sub>&#963;&#178;<sub>eq</sub> + <i>w</i>&#178;<sub>b</sub>&#963;&#178;<sub>b</sub> + 2&#160;<i>w</i><sub>eq</sub><i>w</i><sub>b</sub>&#160;&#961;&#160;&#963;<sub>eq</sub>&#963;<sub>b</sub></p>
+<p class="working">asset-only sum: 0.36&#215;256 + 0.16&#215;49 = 92.16 + 7.84 = 100 (i.e. 10.0%&#178;)</p>
+<p>The last term &#8212; the cross term &#8212; is 2&#160;&#215;&#160;0.24&#160;&#215;&#160;&#961;&#160;&#215;&#160;16&#160;&#215;&#160;7 = 53.76&#160;&#215;&#160;&#961;. When &#961; is negative, as it was in the 2000s and 2010s, this term reduces portfolio variance. When &#961; turns positive, the same term adds variance on top of the asset-only sum.</p>
+
+<table class="figs">
+  <caption>Figures box &#183; 60/40 portfolio vol by correlation (illustrative)</caption>
+  <tr><th>Regime</th><th class="n">&#961;</th><th class="n">Portfolio vol</th></tr>
+  <tr><td>Disinflation (2000s&#8211;2019)</td><td class="n">&#8722;0.25</td><td class="n">9.3%</td></tr>
+  <tr><td>Neutral</td><td class="n">0.00</td><td class="n">10.0%</td></tr>
+  <tr><td>Mild inflation (2022&#8211;)</td><td class="n">+0.25</td><td class="n">10.7%</td></tr>
+  <tr><td>High inflation (1970s)</td><td class="n">+0.50</td><td class="n">11.3%</td></tr>
+</table>
+
+<h3 class="sub">2. Why inflation flips the sign</h3>
+<p class="first">Both equities and nominal bonds are priced as present values of future cash flows. When the discount rate rises from inflation, the price of both assets falls simultaneously. The negative correlation that makes 60/40 work depended on the &#8220;flight-to-safety&#8221; dynamic: in a growth shock, bonds rally as equities fall. In a supply-driven inflation shock, no such flight occurs &#8212; the real yield is rising, not falling, and bonds move with equities.</p>
+
+<p class="label">Why It Matters for a Fund Analyst</p>
+<ul class="checks">
+  <li><b>Track rolling 6-month equity-bond correlation</b> as a regime indicator. When it crosses zero, the case for adding real assets (TIPS, commodities, infrastructure) strengthens mechanically.</li>
+  <li><b>Scrutinise risk parity strategies.</b> They lever the bond allocation to equalise risk contributions. In a positive-correlation regime, that leverage amplifies the joint drawdown rather than hedging it.</li>
+  <li><b>For multi-asset mandate reviews</b>, ask which correlation assumption is embedded in the strategic asset allocation. Many SAA models still use 2010-era correlation estimates.</li>
+</ul>
+
+<p class="tags">Concepts: MA-CORR-REGIME &#183; MA-RISK-PARITY &#183; MA-60-40 &#183; FI-TERMPREM &#183; MA-SAA</p>
+<p class="src">Sources: CNBC, &#8220;10-year Treasury yield moves lower after weak housing data&#8221; (20 Oct.); CNBC, September CPI coverage (20 Oct.); own calculation, illustrative figures.</p>
+<p class="end">&#8212; &#9670; &#8212;</p>
+</div>
+
+<div class="page" id="d4">
+<p class="label">The Drill &#183; Story IV &#183; The Allocator</p>
+
+<div class="q" id="q10">
+<p class="qtext"><span class="qnum">10.</span> A 60/40 portfolio has &#963;<sub>eq</sub> = 16%, &#963;<sub>b</sub> = 7%, and the equity-bond correlation shifts from &#8722;0.25 to +0.25. Using the formula above, by approximately how many basis points does portfolio volatility increase?</p>
+<ol class="opts">
+  <li>About 37bp (from 10.0% to 10.4%)</li>
+  <li>About 73bp (from 9.3% to 10.0%)</li>
+  <li>About 140bp (from 9.3% to 10.7%)</li>
+  <li>About 300bp (from 10.0% to 13.0%)</li>
+</ol>
+</div>
+
+<div class="q" id="q11">
+<p class="qtext"><span class="qnum">11.</span> A risk parity fund holds 30% equities and 120% bonds (leveraged), targeting equal risk contributions. The equity-bond correlation rises from &#8722;0.3 to +0.3. What is the most likely consequence for the fund&#8217;s total portfolio risk?</p>
+<ol class="opts">
+  <li>Risk falls, because the fund is diversified by construction.</li>
+  <li>Risk is unchanged, because equal risk contributions are maintained by the rebalancing rule.</li>
+  <li>Risk rises more than for an unlevered 60/40, because bond leverage turns from a partial offset into an amplifier.</li>
+  <li>Risk falls in equities but rises in bonds, leaving the total unchanged.</li>
+</ol>
+</div>
+
+<div class="q" id="q12">
+<p class="qtext"><span class="qnum">12.</span> A multi-asset manager is reviewing her strategic allocation after the 6-month equity-bond correlation moves from &#8722;0.25 to +0.20. Which asset is most likely to partially restore the diversification lost?</p>
+<ol class="opts">
+  <li>Investment-grade corporate bonds (similar spread duration, similar issuer base).</li>
+  <li>Floating-rate leveraged loans (less rate risk but still correlated with equities in a risk-off move).</li>
+  <li>A broad commodity index (direct positive exposure to supply-driven inflation, negative correlation with equities in a stagflation scenario).</li>
+  <li>Long-duration REITs (rate-sensitive and equity-correlated; same directional risk as 60/40).</li>
+</ol>
+</div>
+<details class="reveal">
+<summary>Answers &#8212; tap here, or turn the page &#183; Story IV</summary>
+<div class="answers-page">
+<div class="ans" id="a10">
+<p class="verdict">10. C &#8212; about 140bp (9.3% to 10.7%).</p>
+<p class="why">At &#961; = &#8722;0.25: cross term = 53.76 &#215; (&#8722;0.25) = &#8722;13.44; &#963;<sub>p</sub> = &#8730;86.56 = 9.30%. At &#961; = +0.25: cross term = +13.44; &#963;<sub>p</sub> = &#8730;113.44 = 10.65%. Change = 10.65 &#8722; 9.30 = 135bp &#8776; 140bp.</p>
+<p class="why"><i>A</i> computes the change from neutral (&#961;=0) to &#961;=+0.25 only. <i>B</i> picks the change from neutral to disinflation. <i>D</i> overstates the sensitivity by using a linear approximation on the variance rather than the volatility.</p>
+</div>
+<div class="ans" id="a11">
+<p class="verdict">11. C &#8212; risk rises more than for 60/40, because leverage turns the bond leg from a hedge into an amplifier.</p>
+<p class="why">At &#961; = &#8722;0.3, the levered bond position offsets much of the equity risk (negative cross term). At &#961; = +0.3, the bond leverage is 3&#8211;4&#215; that of 60/40, so the positive cross term is 3&#8211;4&#215; as large. Risk parity assumes a stable or negative correlation: it is the strategy most structurally exposed to a regime flip.</p>
+<p class="why"><i>A</i>: diversification is not &#8220;by construction&#8221; when the correlation regime changes. <i>B</i>: equal risk contributions require rebalancing; during a sudden regime shift, leverage and correlation move faster than the rebalance. <i>D</i>: the effect is symmetric &#8212; it raises the risk of the whole portfolio, not individual legs.</p>
+</div>
+<div class="ans" id="a12">
+<p class="verdict">12. C &#8212; a broad commodity index.</p>
+<p class="why">In a supply-driven inflation regime (the cause of the correlation flip), commodity prices rise as the real economy shock unfolds, while equities and bonds both fall. The commodity index tends to have negative correlation with the equity-bond pair in exactly the conditions that have broken the 60/40 relationship.</p>
+<p class="why"><i>A</i>: IG corporates have a high equity-beta component and fall with equities in a risk-off move. <i>B</i>: loans protect against rate rises but fall with equities when credit conditions tighten. <i>D</i>: long-duration REITs are rate-sensitive and have high equity beta, worsening the correlation problem.</p>
+</div>
+</div>
+</details>
+</div>
+
 <!-- ================= BACK PAGE ================= -->
 <div class="page" id="back">
 <p class="label">Back Page &#183; Review &#183; first seen 17 Oct.</p>
 <p class="note">A concept from an earlier edition, with a new question.</p>
-<div class="q" id="q10">
-<p class="qtext"><span class="qnum">10.</span> A BDC has total assets of $3.00bn, $1.90bn of debt and no other liabilities. It has opted into the 150% asset coverage limit. By roughly what percentage can its assets fall before it breaches the limit?</p>
+<div class="q" id="q13">
+<p class="qtext"><span class="qnum">13.</span> A BDC has total assets of $3.00bn, $1.90bn of debt and no other liabilities. It has opted into the 150% asset coverage limit. By roughly what percentage can its assets fall before it breaches the limit?</p>
 <ol class="opts">
   <li>7.9%</li>
   <li>5.0%</li>
@@ -460,8 +562,8 @@ summary::-webkit-details-marker { display: none; }
 <details class="reveal">
 <summary>Answers &#8212; tap here, or turn the page &#183; Back Page</summary>
 <div class="answers-page">
-<div class="ans" id="a10">
-<p class="verdict">10. B &#8212; 5.0%.</p>
+<div class="ans" id="a13">
+<p class="verdict">13. B &#8212; 5.0%.</p>
 <p class="why">Breach occurs when assets &lt; 1.5 &#215; 1.90 = $2.85bn. The cushion is 0.15 &#247; 3.00 = 5.0%. Coverage today is 3.00 &#247; 1.90 = 157.9%.</p>
 <p class="why"><i>A</i> uses coverage points (157.9 &#8722; 150). <i>C</i> measures the cushion against equity (0.15 &#247; 1.10). <i>D</i> is equity over assets, the cushion before insolvency rather than before the regulatory limit.</p>
 </div>
